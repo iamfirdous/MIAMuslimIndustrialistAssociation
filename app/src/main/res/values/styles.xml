@@ -8,4 +8,81 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MIATheme" parent="AppTheme" />
+
+    <style name="MIATheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="MIATheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="MIATheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="MIATheme.TextViewLabel" parent="@android:style/Widget.TextView">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorTextBlack</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginLeft">24dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="MIATheme.TextViewContent" parent="@android:style/Widget.TextView">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#444444</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginLeft">150dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
+    </style>
+
+    <style name="MIATheme.TextViewLabelTable" parent="@android:style/Widget.TextView">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorTextBlack</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_margin">12dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="MIATheme.TextViewContentTable" parent="@android:style/Widget.TextView">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#444444</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_margin">12dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
+    </style>
+
+    <style name="MIATheme.ButtonOk" parent="@android:style/Widget.Button">
+        <item name="android:disabledAlpha">1.2</item>
+        <item name="android:background">@drawable/button_ok_bg</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">19sp</item>
+        <item name="android:textColor">@color/colorTextWhite</item>
+    </style>
+
+    <style name="MIATheme.TextViewActivityError" parent="@android:style/Widget.TextView">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorTextWhite</item>
+        <item name="android:background">@color/errorBG</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="MIATheme.DatePicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
 </resources>

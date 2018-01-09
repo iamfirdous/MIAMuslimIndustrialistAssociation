@@ -5,13 +5,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
+import com.nexusinfo.mia_muslimindustrialistassociation.models.ProductModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.models.ServiceModel;
 import com.nexusinfo.mia_muslimindustrialistassociation.ui.activities.AddProductActivity;
 import com.nexusinfo.mia_muslimindustrialistassociation.ui.activities.AddServiceActivity;
+import com.nexusinfo.mia_muslimindustrialistassociation.ui.adapters.ProductAdapter;
+import com.nexusinfo.mia_muslimindustrialistassociation.ui.adapters.ServiceAdapter;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +32,9 @@ public class ServiceFragment extends Fragment {
 
     private View view;
     private FloatingActionButton fab;
+    private RecyclerView mRecyclerView;
+    private List<ServiceModel> mServices;
+    private ServiceAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

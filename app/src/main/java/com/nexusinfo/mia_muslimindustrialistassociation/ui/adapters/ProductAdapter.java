@@ -3,6 +3,7 @@ package com.nexusinfo.mia_muslimindustrialistassociation.ui.adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,15 +40,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
-        byte[] photoData = mProducts.get(position).getPhoto();
-        String productName = mProducts.get(position).getProductName();
-        String companyName = mProducts.get(position).getCompanyName();
-        String productSpecification = mProducts.get(position).getSpecification();
+        ProductModel product = mProducts.get(position);
 
-        if(photoData != null) {
-            Bitmap bmp = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
-            holder.ivProductPhoto.setImageBitmap(bmp);
-        }
+        byte[] photoData = product.getPhoto();
+        String productName = product.getProductName();
+        String companyName = product.getCompanyName();
+        String productSpecification = product.getSpecification();
+
+        Bitmap bmp;
+        if(photoData != null)
+            bmp = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
+        else
+            bmp = ((BitmapDrawable)mContext.getResources().getDrawable(R.drawable.ic_product)).getBitmap();
+
+        holder.ivProductPhoto.setImageBitmap(bmp);
 
         if (productName != null && !productName.equals(""))
             holder.tvProductName.setText(productName);
@@ -82,7 +88,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
             ivProductPhoto = itemView.findViewById(R.id.imageView_productPhoto);
             tvProductName = itemView.findViewById(R.id.textView_productName);
-            tvCompanyName = itemView.findViewById(R.id.textView_companyName);
+            tvCompanyName = itemView.findViewById(R.id.textView_companyName_product);
             tvProductSpecification = itemView.findViewById(R.id.textView_productSpecification);
         }
     }

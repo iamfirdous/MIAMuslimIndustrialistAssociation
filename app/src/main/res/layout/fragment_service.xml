@@ -5,6 +5,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.nexusinfo.mia_muslimindustrialistassociation.ui.fragments.ServiceFragment">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_service"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add_service"
         style="@style/MIATheme.ButtonOk"

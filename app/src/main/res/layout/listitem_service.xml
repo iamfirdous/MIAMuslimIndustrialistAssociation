@@ -15,48 +15,46 @@
             android:padding="8dp">
 
             <ImageView
-                android:id="@+id/imageView_productPhoto"
+                android:id="@+id/imageView_servicePhoto"
                 android:layout_width="100dp"
                 android:layout_height="75dp"
-                android:padding="4dp"
-                android:src="@drawable/ic_product"/>
+                android:padding="6dp"
+                android:src="@drawable/ic_services"/>
 
             <TextView
-                android:id="@+id/textView_productName"
+                android:id="@+id/textView_serviceName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/imageView_productPhoto"
-                android:text="Nedusoft"
+                android:layout_toRightOf="@id/imageView_servicePhoto"
+                android:text="Digital Marketing"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                android:textColor="@color/colorTextBlack"
-                android:textSize="15sp"/>
+                android:textColor="@color/colorTextBlack" />
 
             <TextView
-                android:id="@+id/textView_companyName_product"
+                android:id="@+id/textView_companyName_service"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/imageView_productPhoto"
-                android:layout_below="@id/textView_productName"
+                android:layout_toRightOf="@id/imageView_servicePhoto"
+                android:layout_below="@id/textView_serviceName"
                 android:background="@color/colorAccent"
                 android:paddingLeft="4dp"
                 android:paddingRight="4dp"
-
                 android:text="Onespot Nexusinfo"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse"
                 android:textColor="@color/colorTextWhite"
-                />
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView_productSpecification"
+                android:id="@+id/textView_serviceDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/imageView_productPhoto"
-                android:layout_below="@id/textView_companyName_product"
+                android:layout_toRightOf="@id/imageView_servicePhoto"
+                android:layout_below="@id/textView_companyName_service"
                 android:text="School ERP software for Management of Schools/Colleges"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 

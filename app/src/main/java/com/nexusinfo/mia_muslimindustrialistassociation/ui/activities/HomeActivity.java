@@ -1,8 +1,7 @@
 package com.nexusinfo.mia_muslimindustrialistassociation.ui.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,34 +13,45 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
+import com.nexusinfo.mia_muslimindustrialistassociation.ui.fragments.ProductFragment;
+import com.nexusinfo.mia_muslimindustrialistassociation.ui.fragments.ProfileFragment;
+import com.nexusinfo.mia_muslimindustrialistassociation.ui.fragments.SearchFragment;
+import com.nexusinfo.mia_muslimindustrialistassociation.ui.fragments.ServiceFragment;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private FragmentManager mManager;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mToggle;
+    private NavigationView mNavigationView;
+
+    private View header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        initializeUI();
+    }
+
+    public void initializeUI () {
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        mManager = getSupportFragmentManager();
+        mDrawerLayout = findViewById(R.id.drawer_layout);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        mManager.beginTransaction().replace(R.id.content_main, new SearchFragment()).commit();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        mToggle = new ActionBarDrawerToggle(
+                this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+
+        mNavigationView = findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -82,19 +92,20 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-//        if (id == R.id.nav_camera) {
-//            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
+        switch (id) {
+            case R.id.nav_search:
+                mManager.beginTransaction().replace(R.id.content_main, new SearchFragment()).commit();
+                break;
+            case R.id.nav_products:
+                mManager.beginTransaction().replace(R.id.content_main, new ProductFragment()).commit();
+                break;
+            case R.id.nav_services:
+                mManager.beginTransaction().replace(R.id.content_main, new ServiceFragment()).commit();
+                break;
+            case R.id.nav_profile:
+                mManager.beginTransaction().replace(R.id.content_main, new ProfileFragment()).commit();
+                break;
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

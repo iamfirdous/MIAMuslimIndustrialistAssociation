@@ -1,4 +1,4 @@
-package com.nexusinfo.mia_muslimindustrialistassociation.ui.adapters;
+package com.nexusinfo.mia_muslimindustrialistassociation.ui.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

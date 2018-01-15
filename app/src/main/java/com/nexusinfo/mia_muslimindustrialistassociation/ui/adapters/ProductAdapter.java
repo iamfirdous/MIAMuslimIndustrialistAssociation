@@ -1,6 +1,8 @@
 package com.nexusinfo.mia_muslimindustrialistassociation.ui.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +39,31 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
+        byte[] photoData = mProducts.get(position).getPhoto();
+        String productName = mProducts.get(position).getProductName();
+        String companyName = mProducts.get(position).getCompanyName();
+        String productSpecification = mProducts.get(position).getSpecification();
+
+        if(photoData != null) {
+            Bitmap bmp = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
+            holder.ivProductPhoto.setImageBitmap(bmp);
+        }
+
+        if (productName != null && !productName.equals(""))
+            holder.tvProductName.setText(productName);
+        else
+            holder.tvProductName.setText("-");
+
+        if (companyName != null && !companyName.equals(""))
+            holder.tvCompanyName.setText(companyName);
+        else
+            holder.tvCompanyName.setText("-");
+
+        if (productSpecification != null && !productSpecification.equals(""))
+            holder.tvProductSpecification.setText(productSpecification);
+        else
+            holder.tvProductSpecification.setText("-");
+
     }
 
     @Override
@@ -47,7 +74,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     class ProductViewHolder extends RecyclerView.ViewHolder{
 
         ImageView ivProductPhoto;
-        TextView tvProductName, tvCompanyName, tvProductDescription;
+        TextView tvProductName, tvCompanyName, tvProductSpecification;
 
 
         public ProductViewHolder(View itemView) {
@@ -56,7 +83,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             ivProductPhoto = itemView.findViewById(R.id.imageView_productPhoto);
             tvProductName = itemView.findViewById(R.id.textView_productName);
             tvCompanyName = itemView.findViewById(R.id.textView_companyName);
-            tvProductDescription = itemView.findViewById(R.id.textView_productDescription);
+            tvProductSpecification = itemView.findViewById(R.id.textView_productSpecification);
         }
     }
 }

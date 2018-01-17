@@ -66,7 +66,17 @@
         <item name="android:disabledAlpha">1.2</item>
         <item name="android:background">@drawable/button_ok_bg</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorTextWhite</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style>
+
+    <style name="MIATheme.ButtonCancel" parent="@android:style/Widget.Button">
+        <item name="android:disabledAlpha">1.2</item>
+        <item name="android:background">@drawable/button_ok_accent_bg</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/colorTextWhite</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>

@@ -23,7 +23,7 @@
 
             <TextView
                 android:id="@+id/textView_productName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/imageView_productPhoto"
@@ -43,15 +43,13 @@
                 android:background="@color/colorAccent"
                 android:paddingLeft="4dp"
                 android:paddingRight="4dp"
-
                 android:text="Onespot Nexusinfo"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse"
-                android:textColor="@color/colorTextWhite"
-                />
+                android:textColor="@color/colorTextWhite" />
 
             <TextView
                 android:id="@+id/textView_productSpecification"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"

@@ -1,6 +1,9 @@
 package com.nexusinfo.mia_muslimindustrialistassociation.ui.fragments;
 
 
+import android.app.Activity;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,14 +15,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
 import com.nexusinfo.mia_muslimindustrialistassociation.models.ProductModel;
 import com.nexusinfo.mia_muslimindustrialistassociation.ui.activities.AddProductActivity;
 import com.nexusinfo.mia_muslimindustrialistassociation.ui.adapters.ProductAdapter;
+import com.nexusinfo.mia_muslimindustrialistassociation.viewmodels.ProductViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.Thread.sleep;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,8 +41,12 @@ public class ProductFragment extends Fragment {
     private View view;
     private FloatingActionButton mFab;
     private RecyclerView mRecyclerView;
+    private ProgressBar mProgressbar;
     private List<ProductModel> mProducts;
     private ProductAdapter mAdapter;
+
+    private ProductViewModel viewModel;
+    private ProductModel product;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +59,9 @@ public class ProductFragment extends Fragment {
 
         mFab = view.findViewById(R.id.fab_add_product);
         mRecyclerView = view.findViewById(R.id.recyclerView_product);
+        mProgressbar = view.findViewById(R.id.progressBar_product);
+
+        mProgressbar.setVisibility(View.INVISIBLE);
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -55,21 +69,10 @@ public class ProductFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(manager);
 
-        mProducts = new ArrayList<>();
+        viewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
 
-        for(int i = 0; i < 10000; i++) {
-            ProductModel model = new ProductModel();
-            model.setProductName("Nedusoft");
-            model.setCompanyName("Onespot Nexusinfo");
-            model.setSpecification("School ERP software for Management of Schools/Colleges");
-
-            mProducts.add(model);
-        }
-
-        Log.e("Products", "" + mProducts.size());
-
-        mAdapter = new ProductAdapter(getContext(), mProducts);
-        mRecyclerView.setAdapter(mAdapter);
+        Sample task = new Sample(getActivity(), mRecyclerView, mProgressbar);
+        task.execute();
 
         mFab.setOnClickListener(v -> {
             Intent addProductIntent = new Intent(getContext(), AddProductActivity.class);
@@ -79,31 +82,44 @@ public class ProductFragment extends Fragment {
         return view;
     }
 
-    class Sample extends AsyncTask<String, String, String> {
+    class Sample extends AsyncTask<String, String, List<ProductModel>> {
+
+        private Activity activity;
+        private RecyclerView recyclerView;
+        private ProgressBar progressBar;
+
+        public Sample(Activity activity, RecyclerView recyclerView, ProgressBar progressBar) {
+            this.activity = activity;
+            this.recyclerView = recyclerView;
+            this.progressBar = progressBar;
+        }
 
         @Override
         protected void onPreExecute() {
-
+            progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        protected List<ProductModel> doInBackground(String... strings) {
 
-            for(int i = 0; i < 10000; i++) {
-                ProductModel model = new ProductModel();
-                model.setProductName("Nedusoft");
-                model.setCompanyName("Onespot Nexusinfo");
-                model.setSpecification("School ERP software for Management of Schools/Colleges");
+            List<ProductModel> products = new ArrayList<>();
 
-                mProducts.add(model);
+            if(viewModel.getProduct() == null){
+                viewModel.setProduct();
             }
 
-            return null;
+            return products;
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(List<ProductModel> products) {
+            progressBar.setVisibility(View.INVISIBLE);
 
+            products.add(viewModel.getProduct());
+            products.add(viewModel.getProduct());
+
+            ProductAdapter adapter = new ProductAdapter(activity, products);
+            recyclerView.setAdapter(adapter);
         }
     }
 

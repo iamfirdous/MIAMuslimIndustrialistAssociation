@@ -26,7 +26,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_margin="@dimen/fab_margin"
-                    android:drawableRight="@drawable/ic_product_24"
+                    android:drawableLeft="@drawable/ic_product_24"
+                    android:drawablePadding="12dp"
                     android:hint="Enter your product name*"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -37,7 +38,7 @@
                 android:layout_height="80dp"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/textInputLayout_productName"
-                android:src="@drawable/ic_upload_accent"/>
+                android:src="@drawable/ic_add_image"/>
 
             <TextView
                 android:id="@+id/textView_uploadProductPhotoHint"
@@ -46,24 +47,27 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:layout_below="@id/imageView_uploadProductPhoto"
-                android:layout_marginBottom="@dimen/fab_margin"
+                android:layout_marginTop="@dimen/fab_margin"
                 android:text="Upload an image that describes\nyour product"/>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInputLayout_productDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin"
                 android:layout_below="@id/textView_uploadProductPhotoHint">
 
                 <EditText
                     android:id="@+id/editText_productDescription"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:layout_margin="@dimen/fab_margin"
-                    android:layout_alignParentLeft="true"
-                    android:inputType="textMultiLine"
+                    android:layout_alignStart="@+id/editText_productCategory"
+                    android:layout_below="@+id/textView_uploadProductPhotoHint"
+                    android:drawableLeft="@drawable/ic_edit_24"
+                    android:drawablePadding="12dp"
                     android:gravity="top|left"
-                    android:hint="Give a small description for your product.."/>
+                    android:hint="Give a small description for your product*"
+                    android:inputType="textMultiLine" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -73,7 +77,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/fab_margin"
                 android:layout_below="@id/textInputLayout_productDescription"
-                android:hint="Select category"/>
+                android:hint="Select category*"/>
 
             <EditText
                 android:id="@+id/editText_productSubCategory"
@@ -81,22 +85,24 @@
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/fab_margin"
                 android:layout_below="@id/editText_productCategory"
-                android:hint="Select sub-category"/>
+                android:hint="Select sub-category*"/>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInputLayout_productKeywords"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin"
                 android:layout_below="@id/editText_productSubCategory">
 
                 <EditText
                     android:id="@+id/editText_productKeywords"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:layout_margin="@dimen/fab_margin"
                     android:layout_alignParentLeft="true"
                     android:inputType="textMultiLine"
                     android:gravity="top|left"
+                    android:drawableLeft="@drawable/ic_keywords_24"
+                    android:drawablePadding="12dp"
                     android:hint="Give keywords that suits your product.."/>
 
             </android.support.design.widget.TextInputLayout>

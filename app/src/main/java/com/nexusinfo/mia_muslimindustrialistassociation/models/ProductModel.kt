@@ -1,9 +1,11 @@
 package com.nexusinfo.mia_muslimindustrialistassociation.models
 
+import java.io.Serializable
+
 /**
  * Created by firdous on 1/13/2018.
  */
-class ProductModel {
+class ProductModel : Serializable{
     var productId: Int? = 0
     var productName: String? = null
 

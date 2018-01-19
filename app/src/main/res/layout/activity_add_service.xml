@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,7 +8,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/cardView_addProductBottom">
+        android:layout_above="@+id/cardView_addServiceBottom">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -26,76 +25,58 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_margin="@dimen/fab_margin"
-                    android:drawableLeft="@drawable/ic_services"
+                    android:drawableLeft="@drawable/ic_services_24"
                     android:drawablePadding="12dp"
-                    android:hint="Enter your product name*"/>
+                    android:hint="Enter your service name*"/>
 
             </android.support.design.widget.TextInputLayout>
 
             <ImageView
-                android:id="@+id/imageView_uploadProductPhoto"
+                android:id="@+id/imageView_uploadServicePhoto"
                 android:layout_width="120dp"
                 android:layout_height="80dp"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@id/textInputLayout_productName"
+                android:layout_below="@id/textInputLayout_serviceName"
                 android:src="@drawable/ic_add_image"/>
 
             <TextView
-                android:id="@+id/textView_uploadProductPhotoHint"
+                android:id="@+id/textView_uploadServicePhotoHint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:layout_below="@id/imageView_uploadProductPhoto"
+                android:layout_below="@id/imageView_uploadServicePhoto"
                 android:layout_marginTop="@dimen/fab_margin"
-                android:text="Upload an image that describes\nyour product"/>
+                android:text="Upload an image that describes\nyour service"/>
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/textInputLayout_productDescription"
+                android:id="@+id/textInputLayout_serviceDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
-                android:layout_below="@id/textView_uploadProductPhotoHint">
+                android:layout_below="@id/textView_uploadServicePhotoHint">
 
                 <EditText
-                    android:id="@+id/editText_productDescription"
+                    android:id="@+id/editText_serviceDescription"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:layout_alignStart="@+id/editText_productCategory"
-                    android:layout_below="@+id/textView_uploadProductPhotoHint"
                     android:drawableLeft="@drawable/ic_edit_24"
                     android:drawablePadding="12dp"
                     android:gravity="top|left"
-                    android:hint="Give a small description for your product*"
+                    android:hint="Give a small description for your service*"
                     android:inputType="textMultiLine" />
 
             </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/editText_productCategory"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/fab_margin"
-                android:layout_below="@id/textInputLayout_productDescription"
-                android:hint="Select category*"/>
-
-            <EditText
-                android:id="@+id/editText_productSubCategory"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/fab_margin"
-                android:layout_below="@id/editText_productCategory"
-                android:hint="Select sub-category*"/>
-
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/textInputLayout_productKeywords"
+                android:id="@+id/textInputLayout_serviceKeywords"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
-                android:layout_below="@id/editText_productSubCategory">
+                android:layout_below="@id/textInputLayout_serviceDescription">
 
                 <EditText
-                    android:id="@+id/editText_productKeywords"
+                    android:id="@+id/editText_serviceKeywords"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_alignParentLeft="true"
@@ -103,7 +84,7 @@
                     android:gravity="top|left"
                     android:drawableLeft="@drawable/ic_keywords_24"
                     android:drawablePadding="12dp"
-                    android:hint="Give keywords that suits your product.."/>
+                    android:hint="Give keywords that suits your service.."/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -112,7 +93,7 @@
     </ScrollView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cardView_addProductBottom"
+        android:id="@+id/cardView_addServiceBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -126,7 +107,7 @@
             android:background="@drawable/cardview_bottom_bg">
 
             <Button
-                android:id="@+id/button_addProductSave"
+                android:id="@+id/button_addServiceSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/MIATheme.ButtonOk"
@@ -136,12 +117,12 @@
                 android:text="Save &amp; publish"/>
 
             <Button
-                android:id="@+id/button_addProductCancel"
+                android:id="@+id/button_addServiceCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/MIATheme.ButtonCancel"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/button_addProductSave"
+                android:layout_toLeftOf="@+id/button_addServiceSave"
                 android:layout_marginEnd="@dimen/fab_margin"
                 android:text="Cancel"/>
 

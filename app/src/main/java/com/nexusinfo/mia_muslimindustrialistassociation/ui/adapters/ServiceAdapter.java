@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
-import com.nexusinfo.mia_muslimindustrialistassociation.models.ProductModel;
 import com.nexusinfo.mia_muslimindustrialistassociation.models.ServiceModel;
 
 import java.util.List;
@@ -27,8 +26,8 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
     private Context mContext;
 
     public ServiceAdapter(Context mContext, List<ServiceModel> mServices) {
-        this.mContext = mContext;
         this.mServices = mServices;
+        this.mContext = mContext;
     }
 
     @Override
@@ -70,6 +69,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
             holder.tvServiceDescription.setText(serviceDescription);
         else
             holder.tvServiceDescription.setText("-");
+
     }
 
     @Override
@@ -77,10 +77,11 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
         return mServices.size();
     }
 
-    class ServiceViewHolder extends RecyclerView.ViewHolder {
+    class ServiceViewHolder extends RecyclerView.ViewHolder{
 
         ImageView ivServicePhoto;
         TextView tvServiceName, tvCompanyName, tvServiceDescription;
+
 
         public ServiceViewHolder(View itemView) {
             super(itemView);

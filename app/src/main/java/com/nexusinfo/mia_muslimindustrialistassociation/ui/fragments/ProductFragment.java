@@ -4,9 +4,11 @@ package com.nexusinfo.mia_muslimindustrialistassociation.ui.fragments;
 import android.app.Activity;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -82,6 +84,23 @@ public class ProductFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        String s = "";
+        outState.putString("s", s);
+//        outState.putSerializable("product", product);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+//        product = (ProductModel) savedInstanceState.getSerializable("product");
+        String s = savedInstanceState.getString("s");
+    }
+
     class Sample extends AsyncTask<String, String, List<ProductModel>> {
 
         private Activity activity;
@@ -104,8 +123,9 @@ public class ProductFragment extends Fragment {
 
             List<ProductModel> products = new ArrayList<>();
 
-            if(viewModel.getProduct() == null){
+            if(product == null){
                 viewModel.setProduct();
+                product = viewModel.getProduct();
             }
 
             return products;
@@ -115,8 +135,8 @@ public class ProductFragment extends Fragment {
         protected void onPostExecute(List<ProductModel> products) {
             progressBar.setVisibility(View.INVISIBLE);
 
-            products.add(viewModel.getProduct());
-            products.add(viewModel.getProduct());
+            products.add(product);
+            products.add(product);
 
             ProductAdapter adapter = new ProductAdapter(activity, products);
             recyclerView.setAdapter(adapter);

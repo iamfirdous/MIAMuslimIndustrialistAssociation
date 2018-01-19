@@ -20,10 +20,14 @@ public class ProductViewModel extends ViewModel {
         product.setProductName("Hello");
 
         try {
-            sleep(4000);
+            sleep(2000);
         } catch (InterruptedException e) {
             Log.e("Exception", e.toString());
         }
+    }
+
+    public void setProduct(ProductModel product){
+        this.product = product;
     }
 
     public ProductModel getProduct() {

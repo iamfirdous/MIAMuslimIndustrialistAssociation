@@ -58,7 +58,17 @@
             android:name=".ui.activities.ViewServiceActivity"
             android:label="Service details"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activities.LoginActivity"></activity>
+
+        <activity
+            android:name=".ui.activities.LoginActivity"
+            android:label="Login to continue"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".ui.activities.MemberProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
     </application>
 
 </manifest>

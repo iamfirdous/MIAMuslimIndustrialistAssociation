@@ -1,4 +1,4 @@
-package com.nexusinfo.mia_muslimindustrialistassociation.models
+package com.nexusinfo.mia_muslimindustrialistassociation.model
 
 import java.io.Serializable
 

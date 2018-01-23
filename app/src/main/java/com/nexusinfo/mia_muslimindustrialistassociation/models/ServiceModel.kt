@@ -1,4 +1,4 @@
-package com.nexusinfo.mia_muslimindustrialistassociation.models
+package com.nexusinfo.mia_muslimindustrialistassociation.model
 
 /**
  * Created by firdous on 1/13/2018.

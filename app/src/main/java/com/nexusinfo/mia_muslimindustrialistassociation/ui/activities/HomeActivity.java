@@ -94,7 +94,7 @@ public class HomeActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_search:
-                mManager.beginTransaction().replace(R.id.content_main, new SearchFragment()).commit();
+                mManager.beginTransaction().replace(R.id.content_main, new SearchFragment(), "").commit();
                 break;
             case R.id.nav_products:
                 mManager.beginTransaction().replace(R.id.content_main, new ProductFragment()).commit();

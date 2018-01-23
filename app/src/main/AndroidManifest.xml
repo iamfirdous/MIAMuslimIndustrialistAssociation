@@ -40,29 +40,25 @@
         <activity
             android:name=".ui.activities.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.AddProductActivity"
             android:label="Add product"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.AddServiceActivity"
             android:label="Add service"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.ViewProductActivity"
             android:label="Product details"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.ViewServiceActivity"
             android:label="Service details"
             android:screenOrientation="portrait" />
-
+        <activity android:name=".ui.activities.LoginActivity"></activity>
     </application>
 
 </manifest>

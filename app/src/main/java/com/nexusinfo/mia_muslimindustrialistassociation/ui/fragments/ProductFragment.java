@@ -18,11 +18,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
 import com.nexusinfo.mia_muslimindustrialistassociation.models.ProductModel;
 import com.nexusinfo.mia_muslimindustrialistassociation.ui.activities.AddProductActivity;
 import com.nexusinfo.mia_muslimindustrialistassociation.ui.adapters.ProductAdapter;
+import com.nexusinfo.mia_muslimindustrialistassociation.utils.Util;
 import com.nexusinfo.mia_muslimindustrialistassociation.viewmodels.ProductViewModel;
 
 import java.util.ArrayList;
@@ -49,6 +51,8 @@ public class ProductFragment extends Fragment {
 
     private ProductViewModel viewModel;
     private ProductModel product;
+
+    String s = "Hellllooee";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,8 +92,10 @@ public class ProductFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        String s = "";
-        outState.putString("s", s);
+        Util.showCustomToast(getContext(), "onSaveInstanceState" + s, 1);
+        Log.e("onSaveInstanceState", s);
+
+        outState.putString("", s);
 //        outState.putSerializable("product", product);
     }
 
@@ -98,7 +104,14 @@ public class ProductFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
 //        product = (ProductModel) savedInstanceState.getSerializable("product");
-        String s = savedInstanceState.getString("s");
+
+        if(savedInstanceState != null){
+            s = savedInstanceState.getString("s");
+            Util.showCustomToast(getContext(), "onActivityCreated1" + s, 1);
+            Log.e("onActivityCreated1", s);
+        }
+        Log.e("onActivityCreated2", s);
+        Util.showCustomToast(getContext(), "onActivityCreated2" + s, 1);
     }
 
     class Sample extends AsyncTask<String, String, List<ProductModel>> {

@@ -7,4 +7,5 @@
     <color name="colorTextBlack">#000000</color>
     <color name="colorTextWhite">#FFFFFF</color>
     <color name="errorBG">#d50000</color>
+    <color name="grayLight">#fafafa</color>
 </resources>

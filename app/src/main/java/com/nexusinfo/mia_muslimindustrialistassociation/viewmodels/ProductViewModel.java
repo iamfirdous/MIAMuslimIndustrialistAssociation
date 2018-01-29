@@ -3,7 +3,7 @@ package com.nexusinfo.mia_muslimindustrialistassociation.viewmodels;
 import android.arch.lifecycle.ViewModel;
 import android.util.Log;
 
-import com.nexusinfo.mia_muslimindustrialistassociation.models.ProductModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.model.ProductModel;
 
 import static java.lang.Thread.sleep;
 

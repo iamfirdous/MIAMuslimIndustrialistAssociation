@@ -12,17 +12,18 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.nexusinfo.mia_muslimindustrialistassociation.LocalDatabaseHelper;
 import com.nexusinfo.mia_muslimindustrialistassociation.MyApplication;
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
 import com.nexusinfo.mia_muslimindustrialistassociation.connection.DatabaseConnection;
-import com.nexusinfo.mia_muslimindustrialistassociation.models.UserModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.model.UserModel;
 import com.nexusinfo.mia_muslimindustrialistassociation.receivers.InternetConnectivityReceiver;
-import com.nexusinfo.mia_muslimindustrialistassociation.utils.Util;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
+
+import static com.nexusinfo.mia_muslimindustrialistassociation.utils.Util.showCustomToast;
 
 public class LoginActivity extends AppCompatActivity implements InternetConnectivityReceiver.InternetConnectivityReceiverListener {
 
@@ -113,27 +114,25 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
 
         @Override
         protected void onPreExecute() {
-//            loginName = etLoginName.getText().toString().trim();
-//            password = etPassword.getText().toString().trim();
-//
-//            boolean notEmpty = true;
-//
-//            if(loginName.equals("")){
-//                notEmpty = false;
-//                etLoginName.setError("Enter your login name");
-//                cancel(true);
-//            }
-//            if(password.equals("")){
-//                notEmpty = false;
-//                etPassword.setError("Enter your password");
-//                cancel(true);
-//            }
-//            if(notEmpty){
-//                loadStart();
-//            }
-        }
+            loginName = etLoginName.getText().toString().trim();
+            password = etPassword.getText().toString().trim();
 
-        String s = "";
+            boolean notEmpty = true;
+
+            if(loginName.equals("")){
+                notEmpty = false;
+                etLoginName.setError("Enter your login name");
+                cancel(true);
+            }
+            if(password.equals("")){
+                notEmpty = false;
+                etPassword.setError("Enter your password");
+                cancel(true);
+            }
+            if(notEmpty){
+                loadStart();
+            }
+        }
 
         @Override
         protected UserModel doInBackground(String... strings) {
@@ -141,38 +140,43 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
                 Connection conn = databaseConnection.getConnection();
                 Statement stmt = conn.createStatement();
 
-                    ResultSet rs = stmt.executeQuery("SELECT * FROM MMember");
+                String query = "SELECT LoginId, Authentication, cmpid, brcode " +
+                        " FROM Login " +
+                        " WHERE LoginName = '" + loginName + "' AND " +
+                        " Password = '" + password + "'";
+                Log.e("LoginQuery", query);
 
-                    while (rs.next()){
-                        s = rs.getString("Name");
+                ResultSet rs = stmt.executeQuery(query);
+
+                boolean wrongCredentials = true;
+
+                if (rs.next()){
+                    user.setUserId(rs.getInt("LoginId"));
+                    user.setLoginName(loginName);
+                    user.setAuth(rs.getString("Authentication"));
+                    user.setCmpId(rs.getString("cmpid"));
+                    user.setBrCode(rs.getString("brcode"));
+
+                    Statement stmt1 = conn.createStatement();
+
+                    String query1 = "SELECT Name, Mobile, Email " +
+                            " FROM MMember " +
+                            " WHERE UserID = " + user.getUserId();
+                    ResultSet rs1 = stmt1.executeQuery(query1);
+
+                    if(rs1.next()) {
+                        user.setMemberName(rs1.getString("Name"));
+                        user.setMemberMobile(rs1.getString("Mobile"));
+                        user.setMemberEmail(rs1.getString("Email"));
                     }
 
-//                String query = "SELECT " + DatabaseConnection.COL_ROLLNO + ", "
-//                        + DatabaseConnection.COL_FATHERMOBILE + ", "
-//                        + DatabaseConnection.COL_STUDENTID +
-//                        " FROM " + DatabaseConnection.VIEW_STUDENT_DETAILS_FOR_REPORT +
-//                        " WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + loginName + "' AND "
-//                        + DatabaseConnection.COL_PASSWORD + " = '" + password + "' AND "
-//                        + DatabaseConnection.COL_STATUS + " = 'Regular' AND "
-//                        + DatabaseConnection.COL_CMPID + " = '" + user.getCmpId() + "' AND "
-//                        + DatabaseConnection.COL_BRCODE + " = '" + user.getBrCode() + "'";
-//                Log.e("LoginQuery", query);
-//
-//                ResultSet rs = stmt.executeQuery(query);
-//
-//                boolean wrongCredentials = true;
-//
-//                if (rs.next()){
-//                    user.setUserID(rs.getString(DatabaseConnection.COL_ROLLNO));
-//                    user.setFatherMobile(rs.getString(DatabaseConnection.COL_FATHERMOBILE));
-//                    user.setStudentID(rs.getInt(DatabaseConnection.COL_STUDENTID));
-//                    wrongCredentials = false;
-//                }
-//
-//                if(wrongCredentials){
-//                    publishProgress("WrongCredentials");
-//                    cancel(true);
-//                }
+                    wrongCredentials = false;
+                }
+
+                if(wrongCredentials){
+                    publishProgress("WrongCredentials");
+                    cancel(true);
+                }
 
             }
             catch (Exception e){
@@ -185,8 +189,29 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
         }
 
         @Override
+        protected void onProgressUpdate(String... values) {
+            if(values[0].equals("Exception")){
+                showCustomToast(LoginActivity.this, "Some error occurred.",1);
+                loadFinish();
+            }
+            if(values[0].equals("WrongCredentials")){
+                tvError.setVisibility(View.VISIBLE);
+                tvError.setText(R.string.errorMessageForWrongCredentials);
+                loadFinish();
+            }
+        }
+
+        @Override
         protected void onPostExecute(UserModel userModel) {
-            Util.showCustomToast(LoginActivity.this, s, 1);
+            if (LocalDatabaseHelper.getInstance(LoginActivity.this).addData(user)) {
+                showCustomToast(LoginActivity.this, "Login successful",1);
+                Intent studentDetailsIntent = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(studentDetailsIntent);
+                finish();
+            }
+            else {
+                Log.e("LocalDBProblem", "Data not added");
+            }
         }
 
         private void loadStart(){

@@ -2,15 +2,14 @@ package com.nexusinfo.mia_muslimindustrialistassociation.ui.fragments;
 
 
 import android.app.Activity;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,10 +17,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
-import com.nexusinfo.mia_muslimindustrialistassociation.models.ProductModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.model.ProductModel;
 import com.nexusinfo.mia_muslimindustrialistassociation.ui.activities.AddProductActivity;
 import com.nexusinfo.mia_muslimindustrialistassociation.ui.adapters.ProductAdapter;
 import com.nexusinfo.mia_muslimindustrialistassociation.utils.Util;
@@ -60,7 +58,7 @@ public class ProductFragment extends Fragment {
         // Inflate the layout for this fragment
 
         getActivity().setTitle(R.string.title_my_products);
-
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
         view = inflater.inflate(R.layout.fragment_product, container, false);
 
         mFab = view.findViewById(R.id.fab_add_product);

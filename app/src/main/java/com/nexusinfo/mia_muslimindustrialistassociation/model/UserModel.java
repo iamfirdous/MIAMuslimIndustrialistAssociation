@@ -1,4 +1,4 @@
-package com.nexusinfo.mia_muslimindustrialistassociation.models;
+package com.nexusinfo.mia_muslimindustrialistassociation.model;
 
 import java.io.Serializable;
 
@@ -8,17 +8,34 @@ import java.io.Serializable;
 
 public class UserModel implements Serializable{
 
-    private String memberID, memberMobile, memberEmail, memberName, cmpId, brCode;
+    private String loginName, auth, memberMobile, memberEmail, memberName, cmpId, brCode;
+    private int userId;
 
     public UserModel() {
     }
 
-    public String getMemberID() {
-        return memberID;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setMemberID(String memberID) {
-        this.memberID = memberID;
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
+
+    public String getAuth() {
+        return auth;
+    }
+
+    public void setAuth(String auth) {
+        this.auth = auth;
     }
 
     public String getMemberMobile() {

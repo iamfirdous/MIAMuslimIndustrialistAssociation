@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.nexusinfo.mia_muslimindustrialistassociation.models.UserModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.model.UserModel;
 
 /**
  * Created by firdous on 11/28/2017.
@@ -18,7 +18,9 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TABLE_NAME = "LocalTB";
 
-    private static final String COLUMN_MEMBER_ID = "MemberID";
+    private static final String COLUMN_USER_ID = "UserID";
+    private static final String COLUMN_LOGIN_NAME = "LoginName";
+    private static final String COLUMN_AUTH = "Authentication";
     private static final String COLUMN_MEMBER_MOBILE = "MemberMobile";
     private static final String COLUMN_MEMBER_EMAIL = "MemberEmail";
     private static final String COLUMN_MEMBER_NAME = "MemberName";
@@ -37,15 +39,17 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
 
     public LocalDatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 5);
+        super(context, DATABASE_NAME, null, 7);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME + " " +
-                "( " + COLUMN_MEMBER_ID + " TEXT PRIMARY KEY," +
-                " " + COLUMN_MEMBER_EMAIL + " TEXT," +
+                "( " + COLUMN_USER_ID + " INTEGER PRIMARY KEY," +
+                " " + COLUMN_LOGIN_NAME + " TEXT," +
+                " " + COLUMN_AUTH + " TEXT," +
                 " " + COLUMN_MEMBER_MOBILE + " TEXT," +
+                " " + COLUMN_MEMBER_EMAIL + " TEXT," +
                 " " + COLUMN_MEMBER_NAME + " TEXT," +
                 " " + COLUMN_COMPANY_ID + " TEXT," +
                 " " + COLUMN_BRANCH_CODE + " TEXT )");
@@ -62,9 +66,11 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues cv = new ContentValues();
 
-        cv.put(COLUMN_MEMBER_ID, user.getMemberID());
-        cv.put(COLUMN_MEMBER_EMAIL, user.getMemberEmail());
+        cv.put(COLUMN_USER_ID, user.getUserId());
+        cv.put(COLUMN_LOGIN_NAME, user.getLoginName());
+        cv.put(COLUMN_AUTH, user.getAuth());
         cv.put(COLUMN_MEMBER_MOBILE, user.getMemberMobile());
+        cv.put(COLUMN_MEMBER_EMAIL, user.getMemberEmail());
         cv.put(COLUMN_MEMBER_NAME, user.getMemberName());
         cv.put(COLUMN_COMPANY_ID, user.getCmpId());
         cv.put(COLUMN_BRANCH_CODE, user.getBrCode());
@@ -85,12 +91,14 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         UserModel user = new UserModel();
-        user.setMemberID(cursor.getString(0));
-        user.setMemberEmail(cursor.getString(1));
-        user.setMemberMobile(cursor.getString(2));
-        user.setMemberName(cursor.getString(3));
-        user.setCmpId(cursor.getString(4));
-        user.setBrCode(cursor.getString(5));
+        user.setUserId(cursor.getInt(0));
+        user.setLoginName(cursor.getString(1));
+        user.setAuth(cursor.getString(2));
+        user.setMemberMobile(cursor.getString(3));
+        user.setMemberEmail(cursor.getString(4));
+        user.setMemberName(cursor.getString(5));
+        user.setCmpId(cursor.getString(6));
+        user.setBrCode(cursor.getString(7));
 
         return user;
     }

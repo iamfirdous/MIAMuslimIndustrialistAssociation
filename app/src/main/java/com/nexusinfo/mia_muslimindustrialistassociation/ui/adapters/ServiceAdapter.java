@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
-import com.nexusinfo.mia_muslimindustrialistassociation.models.ServiceModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.model.ServiceModel;
 
 import java.util.List;
 

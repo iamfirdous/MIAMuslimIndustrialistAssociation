@@ -1,7 +1,9 @@
 package com.nexusinfo.mia_muslimindustrialistassociation.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.nexusinfo.mia_muslimindustrialistassociation.LocalDatabaseHelper;
+import com.nexusinfo.mia_muslimindustrialistassociation.MainActivity;
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
 import com.nexusinfo.mia_muslimindustrialistassociation.ui.fragments.ProductFragment;
 import com.nexusinfo.mia_muslimindustrialistassociation.ui.fragments.ProfileFragment;
@@ -78,9 +82,37 @@ public class HomeActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_logout:
+                new AlertDialog.Builder(this)
+                        .setTitle("Logout")
+                        .setMessage("Are you sure you want to logout?")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            LocalDatabaseHelper.getInstance(this).deleteData();
+                            Intent logout = getBaseContext().getPackageManager()
+                                    .getLaunchIntentForPackage(getBaseContext().getPackageName());
+                            logout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(logout);
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+                break;
+
+            case R.id.action_refresh:
+                Intent refresh = new Intent(this, MainActivity.class);
+                startActivity(refresh);
+                finish();
+                break;
+
+            case R.id.action_change_password:
+//                Intent changePassword = new Intent(this, ChangePasswordActivity.class);
+//                startActivity(changePassword);
+                break;
+
+            case R.id.action_view_profile:
+                Intent viewProfile = new Intent(this, MemberProfileActivity.class);
+                startActivity(viewProfile);
+                break;
         }
 
         return super.onOptionsItemSelected(item);

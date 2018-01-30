@@ -3,12 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_logout"
-        android:orderInCategory="100"
-        android:title="Logout"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/action_refresh"
         android:orderInCategory="100"
         android:title="Refresh"
@@ -25,4 +19,11 @@
         android:orderInCategory="100"
         android:title="View profile"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_logout"
+        android:orderInCategory="100"
+        android:title="Logout"
+        app:showAsAction="never" />
+
 </menu>

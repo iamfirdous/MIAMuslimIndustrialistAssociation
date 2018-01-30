@@ -82,7 +82,6 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
         ImageView ivServicePhoto;
         TextView tvServiceName, tvCompanyName, tvServiceDescription;
 
-
         public ServiceViewHolder(View itemView) {
             super(itemView);
 

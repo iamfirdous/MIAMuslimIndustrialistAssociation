@@ -8,26 +8,18 @@ import java.io.Serializable;
 
 public class UserModel implements Serializable{
 
-    private String loginName, auth, memberMobile, memberEmail, memberName, cmpId, brCode;
-    private int userId;
+    private String auth, memberMobile, memberEmail, memberName, cmpId, brCode;
+    private int memberId;
 
     public UserModel() {
     }
 
-    public int getUserId() {
-        return userId;
+    public int getMemberId() {
+        return memberId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getLoginName() {
-        return loginName;
-    }
-
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
     }
 
     public String getAuth() {

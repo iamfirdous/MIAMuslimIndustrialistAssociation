@@ -44,14 +44,14 @@
                     android:layout_below="@+id/imageView_mia_logo">
 
                     <EditText
-                        android:id="@+id/editText_login_name"
+                        android:id="@+id/editText_login_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="30dp"
                         android:layout_marginRight="30dp"
                         android:layout_marginTop="10dp"
-                        android:hint="Enter login name"
+                        android:hint="Enter login email"
                         android:inputType="text" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -103,6 +103,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/textView_forgot_password_login" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/progressBar_login"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:gravity="right"
+                    android:layout_gravity="bottom"
+                    android:text="Powered by One-spot Nexusinfo"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="8sp"
+                    android:visibility="visible"/>
 
             </RelativeLayout>
 

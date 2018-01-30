@@ -29,9 +29,11 @@ public class ProfileFragment extends Fragment {
 
         getActivity().setTitle(R.string.title_view_amp_edit_profile);
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
-        view = inflater.inflate(R.layout.activity_member_profile, container, false);
+        view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         return view;
     }
+
+
 
 }

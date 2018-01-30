@@ -1,5 +1,6 @@
 package com.nexusinfo.mia_muslimindustrialistassociation.ui.activities;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -31,6 +32,8 @@ public class HomeActivity extends AppCompatActivity
     private NavigationView mNavigationView;
 
     private View header;
+
+    public static final String PROFILE_FRAGMENT = "PROFILE_FRAGMENT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +67,13 @@ public class HomeActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+
+            ProfileFragment profileFragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag(PROFILE_FRAGMENT);
+
+            if(profileFragment != null && profileFragment.isVisible())
+                mManager.beginTransaction().replace(R.id.content_main, new SearchFragment(), "").commit();
+            else
+                super.onBackPressed();
         }
     }
 
@@ -135,7 +144,7 @@ public class HomeActivity extends AppCompatActivity
                 mManager.beginTransaction().replace(R.id.content_main, new ServiceFragment()).commit();
                 break;
             case R.id.nav_profile:
-                mManager.beginTransaction().replace(R.id.content_main, new ProfileFragment()).commit();
+                mManager.beginTransaction().replace(R.id.content_main, new ProfileFragment(), PROFILE_FRAGMENT).commit();
                 break;
         }
 

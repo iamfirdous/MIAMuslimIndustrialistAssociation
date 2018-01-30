@@ -6,7 +6,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -22,12 +21,11 @@ import com.nexusinfo.mia_muslimindustrialistassociation.R;
 import com.nexusinfo.mia_muslimindustrialistassociation.model.ProductModel;
 import com.nexusinfo.mia_muslimindustrialistassociation.ui.activities.AddProductActivity;
 import com.nexusinfo.mia_muslimindustrialistassociation.ui.adapters.ProductAdapter;
-import com.nexusinfo.mia_muslimindustrialistassociation.utils.Util;
 import com.nexusinfo.mia_muslimindustrialistassociation.viewmodels.ProductViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import static com.nexusinfo.mia_muslimindustrialistassociation.utils.Util.showCustomToast;
 import static java.lang.Thread.sleep;
 
 /**
@@ -48,9 +46,6 @@ public class ProductFragment extends Fragment {
     private ProductAdapter mAdapter;
 
     private ProductViewModel viewModel;
-    private ProductModel product;
-
-    String s = "Hellllooee";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,7 +70,7 @@ public class ProductFragment extends Fragment {
 
         viewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
 
-        Sample task = new Sample(getActivity(), mRecyclerView, mProgressbar);
+        FetchProducts task = new FetchProducts(getActivity(), mRecyclerView, mProgressbar);
         task.execute();
 
         mFab.setOnClickListener(v -> {
@@ -86,39 +81,13 @@ public class ProductFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        Util.showCustomToast(getContext(), "onSaveInstanceState" + s, 1);
-        Log.e("onSaveInstanceState", s);
-
-        outState.putString("", s);
-//        outState.putSerializable("product", product);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-//        product = (ProductModel) savedInstanceState.getSerializable("product");
-
-        if(savedInstanceState != null){
-            s = savedInstanceState.getString("s");
-            Util.showCustomToast(getContext(), "onActivityCreated1" + s, 1);
-            Log.e("onActivityCreated1", s);
-        }
-        Log.e("onActivityCreated2", s);
-        Util.showCustomToast(getContext(), "onActivityCreated2" + s, 1);
-    }
-
-    class Sample extends AsyncTask<String, String, List<ProductModel>> {
+    class FetchProducts extends AsyncTask<String, String, List<ProductModel>> {
 
         private Activity activity;
         private RecyclerView recyclerView;
         private ProgressBar progressBar;
 
-        public Sample(Activity activity, RecyclerView recyclerView, ProgressBar progressBar) {
+        public FetchProducts(Activity activity, RecyclerView recyclerView, ProgressBar progressBar) {
             this.activity = activity;
             this.recyclerView = recyclerView;
             this.progressBar = progressBar;
@@ -132,25 +101,36 @@ public class ProductFragment extends Fragment {
         @Override
         protected List<ProductModel> doInBackground(String... strings) {
 
-            List<ProductModel> products = new ArrayList<>();
+            if(viewModel.getProducts() == null){
+                try {
+                    viewModel.setProducts(getContext());
+                    mProducts = viewModel.getProducts();
+                }
+                catch (Exception e){
+                    Log.e("Error", e.toString());
+                    publishProgress("Exception");
+                    cancel(true);
+                }
 
-            if(product == null){
-                viewModel.setProduct();
-                product = viewModel.getProduct();
             }
 
-            return products;
+            return mProducts;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            if(values[0].equals("Exception")){
+                showCustomToast(getContext(), "Some error occurred.",1);
+                progressBar.setVisibility(View.INVISIBLE);
+            }
         }
 
         @Override
         protected void onPostExecute(List<ProductModel> products) {
             progressBar.setVisibility(View.INVISIBLE);
 
-            products.add(product);
-            products.add(product);
-
-            ProductAdapter adapter = new ProductAdapter(activity, products);
-            recyclerView.setAdapter(adapter);
+            mAdapter = new ProductAdapter(activity, products);
+            recyclerView.setAdapter(mAdapter);
         }
     }
 

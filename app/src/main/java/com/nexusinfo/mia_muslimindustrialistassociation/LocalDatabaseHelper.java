@@ -18,8 +18,7 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TABLE_NAME = "LocalTB";
 
-    private static final String COLUMN_USER_ID = "UserID";
-    private static final String COLUMN_LOGIN_NAME = "LoginName";
+    private static final String COLUMN_MEMBER_ID = "MemberID";
     private static final String COLUMN_AUTH = "Authentication";
     private static final String COLUMN_MEMBER_MOBILE = "MemberMobile";
     private static final String COLUMN_MEMBER_EMAIL = "MemberEmail";
@@ -39,14 +38,13 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
 
     public LocalDatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 7);
+        super(context, DATABASE_NAME, null, 8);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME + " " +
-                "( " + COLUMN_USER_ID + " INTEGER PRIMARY KEY," +
-                " " + COLUMN_LOGIN_NAME + " TEXT," +
+                "( " + COLUMN_MEMBER_ID + " INTEGER PRIMARY KEY," +
                 " " + COLUMN_AUTH + " TEXT," +
                 " " + COLUMN_MEMBER_MOBILE + " TEXT," +
                 " " + COLUMN_MEMBER_EMAIL + " TEXT," +
@@ -66,8 +64,7 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues cv = new ContentValues();
 
-        cv.put(COLUMN_USER_ID, user.getUserId());
-        cv.put(COLUMN_LOGIN_NAME, user.getLoginName());
+        cv.put(COLUMN_MEMBER_ID, user.getMemberId());
         cv.put(COLUMN_AUTH, user.getAuth());
         cv.put(COLUMN_MEMBER_MOBILE, user.getMemberMobile());
         cv.put(COLUMN_MEMBER_EMAIL, user.getMemberEmail());
@@ -91,14 +88,13 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         UserModel user = new UserModel();
-        user.setUserId(cursor.getInt(0));
-        user.setLoginName(cursor.getString(1));
-        user.setAuth(cursor.getString(2));
-        user.setMemberMobile(cursor.getString(3));
-        user.setMemberEmail(cursor.getString(4));
-        user.setMemberName(cursor.getString(5));
-        user.setCmpId(cursor.getString(6));
-        user.setBrCode(cursor.getString(7));
+        user.setMemberId(cursor.getInt(0));
+        user.setAuth(cursor.getString(1));
+        user.setMemberMobile(cursor.getString(2));
+        user.setMemberEmail(cursor.getString(3));
+        user.setMemberName(cursor.getString(4));
+        user.setCmpId(cursor.getString(5));
+        user.setBrCode(cursor.getString(6));
 
         return user;
     }

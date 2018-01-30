@@ -28,14 +28,14 @@ import static com.nexusinfo.mia_muslimindustrialistassociation.utils.Util.showCu
 public class LoginActivity extends AppCompatActivity implements InternetConnectivityReceiver.InternetConnectivityReceiverListener {
 
     private TextView tvError, tvForgotPassword;
-    private EditText etLoginName, etPassword;
+    private EditText etLoginEmail, etPassword;
     private Button buttonLogin;
     private ProgressBar progressBar;
 
     private UserModel user;
     private DatabaseConnection databaseConnection;
 
-    private String loginName, password;
+    private String loginEmail, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
 
         tvError = findViewById(R.id.textView_error_loginActivity);
         tvForgotPassword = findViewById(R.id.textView_forgot_password_login);
-        etLoginName = findViewById(R.id.editText_login_name);
+        etLoginEmail = findViewById(R.id.editText_login_email);
         etPassword = findViewById(R.id.editText_password);
         buttonLogin = findViewById(R.id.button_login);
         progressBar = findViewById(R.id.progressBar_login);
@@ -114,14 +114,14 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
 
         @Override
         protected void onPreExecute() {
-            loginName = etLoginName.getText().toString().trim();
+            loginEmail = etLoginEmail.getText().toString().trim();
             password = etPassword.getText().toString().trim();
 
             boolean notEmpty = true;
 
-            if(loginName.equals("")){
+            if(loginEmail.equals("")){
                 notEmpty = false;
-                etLoginName.setError("Enter your login name");
+                etLoginEmail.setError("Enter your login email");
                 cancel(true);
             }
             if(password.equals("")){
@@ -140,9 +140,9 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
                 Connection conn = databaseConnection.getConnection();
                 Statement stmt = conn.createStatement();
 
-                String query = "SELECT LoginId, Authentication, cmpid, brcode " +
+                String query = "SELECT Authentication, cmpid, brcode " +
                         " FROM Login " +
-                        " WHERE LoginName = '" + loginName + "' AND " +
+                        " WHERE LoginName = '" + loginEmail + "' AND " +
                         " Password = '" + password + "'";
                 Log.e("LoginQuery", query);
 
@@ -151,23 +151,22 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
                 boolean wrongCredentials = true;
 
                 if (rs.next()){
-                    user.setUserId(rs.getInt("LoginId"));
-                    user.setLoginName(loginName);
+                    user.setMemberEmail(loginEmail);
                     user.setAuth(rs.getString("Authentication"));
                     user.setCmpId(rs.getString("cmpid"));
                     user.setBrCode(rs.getString("brcode"));
 
                     Statement stmt1 = conn.createStatement();
 
-                    String query1 = "SELECT Name, Mobile, Email " +
+                    String query1 = "SELECT MemberID, Name, Mobile " +
                             " FROM MMember " +
-                            " WHERE UserID = " + user.getUserId();
+                            " WHERE Email = '" + user.getMemberEmail() + "'";
                     ResultSet rs1 = stmt1.executeQuery(query1);
 
                     if(rs1.next()) {
+                        user.setMemberId(rs1.getInt("MemberID"));
                         user.setMemberName(rs1.getString("Name"));
                         user.setMemberMobile(rs1.getString("Mobile"));
-                        user.setMemberEmail(rs1.getString("Email"));
                     }
 
                     wrongCredentials = false;
@@ -216,7 +215,7 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
 
         private void loadStart(){
             progressBar.setVisibility(View.VISIBLE);
-            etLoginName.setEnabled(false);
+            etLoginEmail.setEnabled(false);
             etPassword.setEnabled(false);
             buttonLogin.setEnabled(false);
             tvForgotPassword.setEnabled(false);
@@ -224,7 +223,7 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
 
         private void loadFinish(){
             progressBar.setVisibility(View.INVISIBLE);
-            etLoginName.setEnabled(true);
+            etLoginEmail.setEnabled(true);
             etPassword.setEnabled(true);
             buttonLogin.setEnabled(true);
             tvForgotPassword.setEnabled(true);

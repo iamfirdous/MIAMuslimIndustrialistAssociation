@@ -55,17 +55,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         holder.ivProductPhoto.setImageBitmap(bmp);
 
-        if (productName != null && !productName.equals(""))
+        if (productName != null || !productName.equals(""))
             holder.tvProductName.setText(productName);
         else
             holder.tvProductName.setText("-");
 
-        if (companyName != null && !companyName.equals(""))
+        if (companyName != null || !companyName.equals(""))
             holder.tvCompanyName.setText(companyName);
         else
             holder.tvCompanyName.setText("-");
 
-        if (productSpecification != null && !productSpecification.equals(""))
+        if (productSpecification != null || !productSpecification.equals(""))
             holder.tvProductSpecification.setText(productSpecification);
         else
             holder.tvProductSpecification.setText("-");

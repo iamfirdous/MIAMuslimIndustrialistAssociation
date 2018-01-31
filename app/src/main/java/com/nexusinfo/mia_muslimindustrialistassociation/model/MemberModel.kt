@@ -12,12 +12,25 @@ class MemberModel {
     var email: String? = null
     var residentialAddress: String? = null
     var officeAddress: String? = null
+
+    var productCount: Int? = 0
+    var serviceCount: Int? = 0
+    var ratings: Float? = 0f
+
     var designationId: Int? = 0
+    var designation: String? = null
+
     var departmentId: Int? = 0
+    var departmentName: String? = null
+
     var companyName: String? = null
+
     var categoryId: Int? = 0
+    var categoryName: String? = null
+
     var contactPersonName: String? = null
     var contactPersonMobile: String? = null
+
     var photo: ByteArray? = null
     var gender: String? = null
     var manufacture: String? = null

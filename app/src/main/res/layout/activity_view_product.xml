@@ -58,6 +58,17 @@
                         android:textColor="@color/colorTextWhite" />
 
                     <TextView
+                        android:id="@+id/textView_viewProductEdit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView_viewCompanyName_product"
+                        android:layout_toRightOf="@id/imageView_viewProductPhoto"
+                        android:layout_marginTop="6dp"
+                        android:text="Edit product details"
+                        android:drawablePadding="6dp"
+                        android:drawableLeft="@drawable/ic_edit_update_24" />
+
+                    <TextView
                         android:id="@+id/textView_productSpecLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -74,14 +85,37 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/textView_productSpecLabel"
                         android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
                         android:layout_marginTop="3dp"
                         android:text="School ERP software for Management of Schools/Colleges. It is helpful in the Management of Schools and Colleges"/>
+
+                    <TextView
+                        android:id="@+id/textView_productAvailabilityLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView_viewProductSpecification"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="16dp"
+                        android:textColor="@color/colorTextBlack"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:text="Product availability"/>
+
+                    <TextView
+                        android:id="@+id/textView_viewProductAvailability"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textView_productAvailabilityLabel"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="3dp"
+                        android:text="Available"/>
 
                     <TextView
                         android:id="@+id/textView_productCategoryLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/textView_viewProductSpecification"
+                        android:layout_below="@+id/textView_viewProductAvailability"
                         android:layout_marginTop="8dp"
                         android:layout_marginLeft="16dp"
                         android:textColor="@color/colorTextBlack"
@@ -95,6 +129,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/textView_productCategoryLabel"
                         android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
                         android:layout_marginTop="3dp"
                         android:text="Education"/>
 
@@ -116,6 +151,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/textView_productSubCategoryLabel"
                         android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
                         android:layout_marginTop="3dp"
                         android:layout_marginBottom="8dp"
                         android:text="School/College ERP"/>
@@ -141,12 +177,66 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:textColor="@color/colorTextBlack"
+                        android:textSize="17sp"
+                        android:text="About One-spot Nexusinfo"/>
+
+                    <TextView
+                        android:id="@+id/textView_productMemberNameLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textView_productAboutCompanyLabel"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="3dp"
                         android:textColor="@color/colorTextBlack"
                         android:textStyle="bold"
                         android:textSize="15sp"
-                        android:text="About One-spot Nexusinfo"/>
+                        android:text="Member name"/>
 
+                    <TextView
+                        android:id="@+id/textView_viewProductMemberName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textView_productMemberNameLabel"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="3dp"
+                        android:text="Nazir Ahmed"/>
 
+                    <TextView
+                        android:id="@+id/textView_productMemberDesignationLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textView_viewProductMemberName"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="3dp"
+                        android:textColor="@color/colorTextBlack"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:text="Member designation"/>
+
+                    <TextView
+                        android:id="@+id/textView_viewProductMemberDesignation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textView_productMemberDesignationLabel"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="3dp"
+                        android:text="CEO"/>
+
+                    <TextView
+                        android:id="@+id/textView_viewProductMemberProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textView_viewProductMemberDesignation"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="View Nazir Ahmed's profile" />
 
                 </RelativeLayout>
 

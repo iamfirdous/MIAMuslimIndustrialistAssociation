@@ -1,6 +1,7 @@
 package com.nexusinfo.mia_muslimindustrialistassociation.ui.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
 import com.nexusinfo.mia_muslimindustrialistassociation.model.ServiceModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.ui.activities.ViewProductActivity;
+import com.nexusinfo.mia_muslimindustrialistassociation.ui.activities.ViewServiceActivity;
 
 import java.util.List;
 
@@ -70,6 +73,11 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
         else
             holder.tvServiceDescription.setText("-");
 
+        holder.itemView.setOnClickListener(view -> {
+            Intent viewService = new Intent(mContext, ViewServiceActivity.class);
+            viewService.putExtra("service", service);
+            mContext.startActivity(viewService);
+        });
     }
 
     @Override
@@ -81,10 +89,12 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
 
         ImageView ivServicePhoto;
         TextView tvServiceName, tvCompanyName, tvServiceDescription;
+        View itemView;
 
         public ServiceViewHolder(View itemView) {
             super(itemView);
 
+            this.itemView = itemView;
             ivServicePhoto = itemView.findViewById(R.id.imageView_servicePhoto);
             tvServiceName = itemView.findViewById(R.id.textView_serviceName);
             tvCompanyName = itemView.findViewById(R.id.textView_companyName_service);

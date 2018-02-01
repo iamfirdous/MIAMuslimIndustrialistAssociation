@@ -117,11 +117,6 @@ public class HomeActivity extends AppCompatActivity
 //                Intent changePassword = new Intent(this, ChangePasswordActivity.class);
 //                startActivity(changePassword);
                 break;
-
-            case R.id.action_view_profile:
-                Intent viewProfile = new Intent(this, MemberProfileActivity.class);
-                startActivity(viewProfile);
-                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -151,5 +146,17 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void productsMenu(View view){
+        mManager.beginTransaction().replace(R.id.content_main, new ProductFragment()).commit();
+    }
+
+    public void servicesMenu(View view){
+        mManager.beginTransaction().replace(R.id.content_main, new ServiceFragment()).commit();
+    }
+
+    public void profileMenu(View view){
+        mManager.beginTransaction().replace(R.id.content_main, new ProfileFragment()).commit();
     }
 }

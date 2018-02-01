@@ -1,6 +1,7 @@
 package com.nexusinfo.mia_muslimindustrialistassociation.ui.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
 import com.nexusinfo.mia_muslimindustrialistassociation.model.ProductModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.ui.activities.ViewProductActivity;
 
 import java.util.List;
 
@@ -55,20 +57,26 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         holder.ivProductPhoto.setImageBitmap(bmp);
 
-        if (productName != null || !productName.equals(""))
+        if (productName != null && !productName.equals(""))
             holder.tvProductName.setText(productName);
         else
             holder.tvProductName.setText("-");
 
-        if (companyName != null || !companyName.equals(""))
+        if (companyName != null && !companyName.equals(""))
             holder.tvCompanyName.setText(companyName);
         else
             holder.tvCompanyName.setText("-");
 
-        if (productSpecification != null || !productSpecification.equals(""))
+        if (productSpecification != null && !productSpecification.equals(""))
             holder.tvProductSpecification.setText(productSpecification);
         else
             holder.tvProductSpecification.setText("-");
+
+        holder.itemView.setOnClickListener(view -> {
+            Intent viewProduct = new Intent(mContext, ViewProductActivity.class);
+            viewProduct.putExtra("product", product);
+            mContext.startActivity(viewProduct);
+        });
 
     }
 
@@ -81,11 +89,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         ImageView ivProductPhoto;
         TextView tvProductName, tvCompanyName, tvProductSpecification;
-
+        View itemView;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
 
+            this.itemView = itemView;
             ivProductPhoto = itemView.findViewById(R.id.imageView_productPhoto);
             tvProductName = itemView.findViewById(R.id.textView_productName);
             tvCompanyName = itemView.findViewById(R.id.textView_companyName_product);

@@ -110,7 +110,7 @@
                 android:id="@+id/button_addServiceSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/MIATheme.ButtonOk"
+                style="@style/MIATheme.ButtonCancel"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/fab_margin"

@@ -34,28 +34,29 @@ public class ServiceViewModel extends ViewModel {
 
         Statement stmt = conn.createStatement();
 
-        String query = "SELECT ServiceId, Service, CompanyName, ServiceDescription, isActive, cmpid, brcode FROM View_MemberService WHERE MemberId = " + memberID;
+        String query = "SELECT ServiceId, Service, CompanyName, Designation, ServiceDescription, isActive, cmpid, brcode FROM View_MemberService WHERE MemberId = " + memberID;
         Log.e("ServicesQuery", query);
 
         ResultSet rs = stmt.executeQuery(query);
 
         while (rs.next()) {
-            ServiceModel ServiceModel = new ServiceModel();
+            ServiceModel serviceModel = new ServiceModel();
 
-            ServiceModel.setServiceId(rs.getInt("ServiceId"));
-            ServiceModel.setServiceName(rs.getString("Service"));
+            serviceModel.setServiceId(rs.getInt("ServiceId"));
+            serviceModel.setServiceName(rs.getString("Service"));
 
-            ServiceModel.setMemberId(memberID);
-            ServiceModel.setMemberName(user.getMemberName());
-            ServiceModel.setCompanyName(rs.getString("CompanyName"));
+            serviceModel.setMemberId(memberID);
+            serviceModel.setMemberName(user.getMemberName());
+            serviceModel.setMemberDesignation(rs.getString("Designation"));
+            serviceModel.setCompanyName(rs.getString("CompanyName"));
 
-            ServiceModel.setServiceDescription(rs.getString("ServiceDescription"));
-//            ServiceModel.setPhoto(rs.getBytes("Photo"));
-            ServiceModel.setActive(rs.getBoolean("isActive"));
-            ServiceModel.setCompanyId(rs.getString("cmpid"));
-            ServiceModel.setBranchCoce(rs.getString("brcode"));
+            serviceModel.setServiceDescription(rs.getString("ServiceDescription"));
+//            serviceModel.setPhoto(rs.getBytes("Photo"));
+            serviceModel.setActive(rs.getBoolean("isActive"));
+            serviceModel.setCompanyId(rs.getString("cmpid"));
+            serviceModel.setBranchCoce(rs.getString("brcode"));
 
-            services.add(ServiceModel);
+            services.add(serviceModel);
         }
     }
 

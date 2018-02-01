@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
     tools:context="com.nexusinfo.mia_muslimindustrialistassociation.ui.fragments.SearchFragment">
 
@@ -10,14 +11,140 @@
         android:layout_height="match_parent">
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/editText_search"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="53dp"
             android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
             android:drawableLeft="@drawable/ic_search_globe_32"
             android:drawablePadding="12dp"
-            android:hint="Search for products, services"/>
+            android:hint="Search for products, services" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText_search">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout_slider"
+                    android:layout_width="fill_parent"
+                    android:layout_height="190dp"
+                    android:layout_marginTop="16dp">
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/viewPager_slides"
+                        android:layout_width="fill_parent"
+                        android:layout_height="190dp"
+                        android:layout_alignParentTop="true" />
+
+                    <me.relex.circleindicator.CircleIndicator
+                        android:id="@+id/circleIndicator_slides"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_alignParentBottom="true"/>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@+id/relativeLayout_slider"
+                    android:layout_marginTop="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="#f2f2f2"
+                        android:paddingTop="7dp"
+                        android:paddingBottom="7dp"
+                        android:layout_marginBottom="2dp"
+                        android:onClick="productsMenu">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            app:srcCompat="@drawable/ic_product"
+                            android:layout_marginLeft="16dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="32dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/colorTextBlack"
+                            android:text="@string/title_my_products"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="#f2f2f2"
+                        android:paddingTop="7dp"
+                        android:paddingBottom="7dp"
+                        android:layout_marginBottom="2dp"
+                        android:onClick="servicesMenu">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            app:srcCompat="@drawable/ic_services"
+                            android:layout_marginLeft="16dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="32dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/colorTextBlack"
+                            android:text="@string/title_my_services"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="#f2f2f2"
+                        android:paddingTop="7dp"
+                        android:paddingBottom="7dp"
+                        android:layout_marginBottom="2dp"
+                        android:onClick="profileMenu">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            app:srcCompat="@drawable/ic_profile_black"
+                            android:layout_marginLeft="16dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="32dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/colorTextBlack"
+                            android:text="@string/title_view_amp_edit_profile"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </ScrollView>
 
     </RelativeLayout>
 

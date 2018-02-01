@@ -52,7 +52,7 @@
                         android:layout_marginRight="30dp"
                         android:layout_marginTop="10dp"
                         android:hint="Enter login email"
-                        android:inputType="text" />
+                        android:inputType="textEmailAddress" />
 
                 </android.support.design.widget.TextInputLayout>
 

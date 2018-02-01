@@ -14,13 +14,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
+import com.nexusinfo.mia_muslimindustrialistassociation.LocalDatabaseHelper;
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
 import com.nexusinfo.mia_muslimindustrialistassociation.model.MemberModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.model.UserModel;
 import com.nexusinfo.mia_muslimindustrialistassociation.viewmodels.MemberViewModel;
 
 import static com.nexusinfo.mia_muslimindustrialistassociation.utils.Util.showCustomToast;
@@ -50,23 +48,24 @@ public class ProfileFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         holder = new ProfileViewHolder(view);
-
         viewModel = ViewModelProviders.of(this).get(MemberViewModel.class);
 
-        FetchProfile task = new FetchProfile(getContext(), holder);
-        task.execute();
+        FetchProfile task = new FetchProfile(getContext(), holder, viewModel);
+        task.execute("ThisMember");
 
         return view;
     }
 
-    class FetchProfile extends AsyncTask<String, String, MemberModel> {
+    public static class FetchProfile extends AsyncTask<String, String, MemberModel> {
 
         private Context context;
         private ProfileViewHolder holder;
+        private MemberViewModel viewModel;
 
-        public FetchProfile(Context context, ProfileViewHolder holder){
+        public FetchProfile(Context context, ProfileViewHolder holder, MemberViewModel viewModel){
             this.context = context;
             this.holder = holder;
+            this.viewModel = viewModel;
         }
 
         @Override
@@ -82,8 +81,14 @@ public class ProfileFragment extends Fragment {
 
             if(viewModel.getMember() == null){
                 try {
-                    viewModel.setMember(context);
-                    member = viewModel.getMember();
+                    if(strings[0].equals("OtherMember")){
+                        viewModel.setMember(context, true, Integer.parseInt(strings[1]));
+                        member = viewModel.getMember();
+                    }
+                    else {
+                        viewModel.setMember(context, false, 0);
+                        member = viewModel.getMember();
+                    }
                 }
                 catch (Exception e) {
                     Log.e("Error", e.toString());
@@ -100,7 +105,7 @@ public class ProfileFragment extends Fragment {
         @Override
         protected void onProgressUpdate(String... values) {
             if(values[0].equals("Exception")){
-                showCustomToast(getContext(), "Some error occurred.",1);
+                showCustomToast(context, "Some error occurred.",1);
                 holder.progressBar.setVisibility(View.INVISIBLE);
             }
         }
@@ -135,17 +140,17 @@ public class ProfileFragment extends Fragment {
 
                 holder.ivMemberPhoto.setImageBitmap(bmp);
 
-                if (companyName != null || !companyName.equals(""))
+                if (companyName != null && !companyName.equals(""))
                     holder.tvCompanyName.setText(companyName);
                 else
                     holder.tvCompanyName.setText("-");
 
-                if (memberName != null || !memberName.equals(""))
+                if (memberName != null && !memberName.equals(""))
                     holder.tvMemberName.setText(memberName);
                 else
                     holder.tvMemberName.setText("-");
 
-                if (memberDesignation != null || !memberDesignation.equals(""))
+                if (memberDesignation != null && !memberDesignation.equals(""))
                     holder.tvMemberDesignation.setText(memberDesignation);
                 else
                     holder.tvMemberDesignation.setText("-");
@@ -155,50 +160,44 @@ public class ProfileFragment extends Fragment {
                 else
                     holder.tvRatings.setText("-");
 
-                if (email != null || !email.equals(""))
+                if (email != null && !email.equals(""))
                     holder.tvEmail.setText(email);
                 else
                     holder.tvEmail.setText("-");
 
-                if (mobile != null || !mobile.equals(""))
+                if (mobile != null && !mobile.equals(""))
                     holder.tvMobile.setText(mobile);
                 else
                     holder.tvMobile.setText("-");
 
-                if (address != null || !address.equals(""))
+                if (address != null && !address.equals(""))
                     holder.tvAddress.setText(address);
                 else
                     holder.tvAddress.setText("-");
 
                 holder.tvProductCount.setText("" + productCount);
                 holder.tvServiceCount.setText("" + serviceCount);
+
+                UserModel user = LocalDatabaseHelper.getInstance(context).getUser();
+
+                if (member.getMemberId() == user.getMemberId()){
+                    holder.tvAllDetails.setVisibility(View.VISIBLE);
+                    holder.tvProfileEdit.setVisibility(View.VISIBLE);
+
+                    holder.tvAllDetails.setOnClickListener(view -> {
+                        showCustomToast(context, holder.tvAllDetails.getText().toString(),1);
+                    });
+
+                    holder.tvProfileEdit.setOnClickListener(view -> {
+                        showCustomToast(context, holder.tvProfileEdit.getText().toString(),1);
+                    });
+                }
+                else {
+                    holder.tvAllDetails.setVisibility(View.INVISIBLE);
+                    holder.tvProfileEdit.setVisibility(View.INVISIBLE);
+                }
             }
         }
     }
-
-    class ProfileViewHolder {
-        public LinearLayout linearLayout;
-        public TextView tvCompanyName, tvMemberName, tvMemberDesignation,
-                tvProductCount, tvServiceCount, tvRatings,
-                tvEmail, tvMobile, tvAddress, tvAllDetails, tvProfileEdit;
-        public ImageView ivMemberPhoto;
-        public ProgressBar progressBar;
-
-        public ProfileViewHolder(View view) {
-            linearLayout = view.findViewById(R.id.linearLayout_profile);
-            tvCompanyName = view.findViewById(R.id.textView_companyName_profile);
-            tvMemberName = view.findViewById(R.id.textView_memberNameProfile);
-            tvMemberDesignation = view.findViewById(R.id.textView_memberDesignationProfile);
-            tvProductCount = view.findViewById(R.id.textView_productCountProfile);
-            tvServiceCount = view.findViewById(R.id.textView_serviceCountProfile);
-            tvRatings = view.findViewById(R.id.textView_ratingsProfile);
-            tvEmail = view.findViewById(R.id.textView_memberEmailProfile);
-            tvMobile = view.findViewById(R.id.textView_memberMobileProfile);
-            tvAddress = view.findViewById(R.id.textView_memberAddressProfile);
-            tvAllDetails = view.findViewById(R.id.textView_allDetails);
-            tvProfileEdit = view.findViewById(R.id.textView_profileEdit);
-            ivMemberPhoto = view.findViewById(R.id.imageView_memberPhotoProfile);
-            progressBar = view.findViewById(R.id.progressBar_profile);
-        }
-    }
 }
+

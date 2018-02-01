@@ -34,7 +34,7 @@
                     android:text="Company name"
                     android:textColor="@color/colorTextWhite"/>
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageView_memberPhotoProfile"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
@@ -81,7 +81,8 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:onClick="productsMenu">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -110,7 +111,8 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:onClick="servicesMenu">
 
                         <TextView
                             android:layout_width="wrap_content"

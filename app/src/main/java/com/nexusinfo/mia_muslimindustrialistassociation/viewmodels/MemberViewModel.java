@@ -2,6 +2,7 @@ package com.nexusinfo.mia_muslimindustrialistassociation.viewmodels;
 
 import android.arch.lifecycle.ViewModel;
 import android.content.Context;
+import android.util.Log;
 
 import com.nexusinfo.mia_muslimindustrialistassociation.LocalDatabaseHelper;
 import com.nexusinfo.mia_muslimindustrialistassociation.connection.DatabaseConnection;
@@ -19,20 +20,27 @@ import java.sql.Statement;
 public class MemberViewModel extends ViewModel {
 
     private MemberModel member;
+    private int memberId;
 
-    public void setMember(Context context) throws Exception{
+    public void setMember(Context context, boolean  isOther, int memberId) throws Exception{
 
         member = new MemberModel();
 
-        UserModel user = LocalDatabaseHelper.getInstance(context).getUser();
-        int memberId = user.getMemberId();
+        if (isOther){
+            this.memberId = memberId;
+        }
+        else {
+            UserModel user = LocalDatabaseHelper.getInstance(context).getUser();
+            this.memberId = user.getMemberId();
+        }
+
 
         DatabaseConnection connection = new DatabaseConnection(DatabaseConnection.MIA_DB_NAME);
         Connection conn = connection.getConnection();
 
         Statement stmt = conn.createStatement();
 
-        String query = "SELECT * FROM View_Member WHERE MemberID = " + memberId;
+        String query = "SELECT * FROM View_Member WHERE MemberID = " + this.memberId;
         ResultSet rs = stmt.executeQuery(query);
 
         if(rs.next()){
@@ -83,8 +91,8 @@ public class MemberViewModel extends ViewModel {
         sSe = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
         String qPr, qSe;
-        qPr = "SELECT MemberId FROM MMemberProduct WHERE MemberId = " + memberId;
-        qSe = "SELECT MemberId FROM MMemberService WHERE MemberId = " + memberId;
+        qPr = "SELECT MemberId FROM MMemberProduct WHERE MemberId = " + this.memberId;
+        qSe = "SELECT MemberId FROM MMemberService WHERE MemberId = " + this.memberId;
 
         ResultSet rsPr, rsSe;
 
@@ -95,6 +103,8 @@ public class MemberViewModel extends ViewModel {
         rsSe = sSe.executeQuery(qSe);
         rsSe.last();
         member.setServiceCount(rsSe.getRow());
+
+        Log.e("MemberQuery", query);
     }
 
     public MemberModel getMember() {

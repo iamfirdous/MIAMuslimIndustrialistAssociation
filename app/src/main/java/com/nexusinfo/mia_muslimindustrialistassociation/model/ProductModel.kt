@@ -11,6 +11,7 @@ class ProductModel : Serializable{
 
     var memberId: Int? = 0
     var memberName: String? = null
+    var memberDesignation: String? = null
     var companyName: String? = null
 
     var categoryId: Int? = 0

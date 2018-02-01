@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,6 +51,7 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
         progressBar = findViewById(R.id.progressBar_login);
 
         progressBar.setVisibility(View.INVISIBLE);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         user = new UserModel();
         databaseConnection = new DatabaseConnection(DatabaseConnection.MIA_DB_NAME);

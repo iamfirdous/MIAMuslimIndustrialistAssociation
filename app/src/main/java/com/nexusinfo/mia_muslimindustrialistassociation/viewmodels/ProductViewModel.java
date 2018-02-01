@@ -36,7 +36,7 @@ public class ProductViewModel extends ViewModel {
 
         Statement stmt = conn.createStatement();
 
-        String query = "SELECT ProductId, PorductName, CompanyName, CategoryId, CategoryName, SubCategoryId, SubCategoryName, Specification, Photo, isActive, cmpid, brcode FROM View_MemberProduct WHERE MemberId = " + memberID;
+        String query = "SELECT ProductId, PorductName, CompanyName, Designation, CategoryId, CategoryName, SubCategoryId, SubCategoryName, Specification, Photo, isActive, cmpid, brcode FROM View_MemberProduct WHERE MemberId = " + memberID;
         Log.e("ProductsQuery", query);
 
         ResultSet rs = stmt.executeQuery(query);
@@ -49,6 +49,7 @@ public class ProductViewModel extends ViewModel {
 
             productModel.setMemberId(memberID);
             productModel.setMemberName(user.getMemberName());
+            productModel.setMemberDesignation(rs.getString("Designation"));
             productModel.setCompanyName(rs.getString("CompanyName"));
 
             productModel.setCategoryId(rs.getInt("CategoryId"));

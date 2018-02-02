@@ -5,7 +5,12 @@ import java.io.Serializable
 /**
  * Created by firdous on 1/13/2018.
  */
-class ServiceModel : Serializable{
+class ServiceModel : ItemModel(), Serializable{
+
+    override fun setItemType() {
+        itemType = ItemModel.TYPE_SERVICE
+    }
+
     var serviceId: Int? = 0
     var serviceName: String? = null
 

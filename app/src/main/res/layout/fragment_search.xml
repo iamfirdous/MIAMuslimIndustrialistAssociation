@@ -16,11 +16,27 @@
             android:layout_height="53dp"
             android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
             android:drawableLeft="@drawable/ic_search_globe_32"
             android:drawablePadding="12dp"
             android:hint="Search for products, services" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_searchResults"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/editText_search"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar_searchResults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+
         <ScrollView
+            android:id="@+id/scrollView_belowSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/editText_search">

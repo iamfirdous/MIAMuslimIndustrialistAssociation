@@ -1,6 +1,5 @@
 package com.nexusinfo.mia_muslimindustrialistassociation.ui.activities;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -19,7 +18,6 @@ import com.nexusinfo.mia_muslimindustrialistassociation.LocalDatabaseHelper;
 import com.nexusinfo.mia_muslimindustrialistassociation.MainActivity;
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
 import com.nexusinfo.mia_muslimindustrialistassociation.ui.fragments.ProductFragment;
-import com.nexusinfo.mia_muslimindustrialistassociation.ui.fragments.ProfileFragment;
 import com.nexusinfo.mia_muslimindustrialistassociation.ui.fragments.SearchFragment;
 import com.nexusinfo.mia_muslimindustrialistassociation.ui.fragments.ServiceFragment;
 
@@ -64,17 +62,10 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+        if (drawer.isDrawerOpen(GravityCompat.START))
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-
-            ProfileFragment profileFragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag(PROFILE_FRAGMENT);
-
-            if(profileFragment != null && profileFragment.isVisible())
-                mManager.beginTransaction().replace(R.id.content_main, new SearchFragment(), "").commit();
-            else
-                super.onBackPressed();
-        }
+        else
+            super.onBackPressed();
     }
 
     @Override
@@ -139,7 +130,9 @@ public class HomeActivity extends AppCompatActivity
                 mManager.beginTransaction().replace(R.id.content_main, new ServiceFragment()).commit();
                 break;
             case R.id.nav_profile:
-                mManager.beginTransaction().replace(R.id.content_main, new ProfileFragment(), PROFILE_FRAGMENT).commit();
+                Intent viewProfileIntent = new Intent(this, MemberProfileActivity.class);
+                viewProfileIntent.putExtra("Of", "ThisMember");
+                startActivity(viewProfileIntent);
                 break;
         }
 
@@ -157,6 +150,8 @@ public class HomeActivity extends AppCompatActivity
     }
 
     public void profileMenu(View view){
-        mManager.beginTransaction().replace(R.id.content_main, new ProfileFragment()).commit();
+        Intent viewProfileIntent = new Intent(this, MemberProfileActivity.class);
+        viewProfileIntent.putExtra("Of", "ThisMember");
+        startActivity(viewProfileIntent);
     }
 }

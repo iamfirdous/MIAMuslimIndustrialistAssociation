@@ -108,6 +108,7 @@ public class ViewServiceActivity extends AppCompatActivity {
 
             });
 
+            tvCViewMemberProfile.setText("View " + service.getMemberName() + "'s profile");
             tvCViewMemberProfile.setOnClickListener(view -> {
                 Intent viewProfileIntent = new Intent(this, MemberProfileActivity.class);
                 viewProfileIntent.putExtra("memberId", service.getMemberId());

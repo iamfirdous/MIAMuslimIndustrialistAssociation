@@ -121,8 +121,10 @@ public class ViewProductActivity extends AppCompatActivity {
 
             });
 
+            tvCViewMemberProfile.setText("View " + product.getMemberName() + "'s profile");
             tvCViewMemberProfile.setOnClickListener(view -> {
                 Intent viewProfileIntent = new Intent(this, MemberProfileActivity.class);
+                viewProfileIntent.putExtra("Of", "OtherMember");
                 viewProfileIntent.putExtra("memberId", product.getMemberId());
                 startActivity(viewProfileIntent);
             });

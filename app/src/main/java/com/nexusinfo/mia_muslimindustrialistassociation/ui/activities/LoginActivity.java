@@ -206,8 +206,9 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
         protected void onPostExecute(UserModel userModel) {
             if (LocalDatabaseHelper.getInstance(LoginActivity.this).addData(user)) {
                 showCustomToast(LoginActivity.this, "Login successful",1);
-                Intent studentDetailsIntent = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(studentDetailsIntent);
+                Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
+                homeIntent.putExtra("fromProfile", false);
+                startActivity(homeIntent);
                 finish();
             }
             else {

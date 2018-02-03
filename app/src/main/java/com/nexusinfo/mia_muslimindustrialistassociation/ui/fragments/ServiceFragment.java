@@ -69,7 +69,7 @@ public class ServiceFragment extends Fragment {
 
         viewModel = ViewModelProviders.of(this).get(ServiceViewModel.class);
 
-        FetchServices task = new FetchServices(getActivity(), mRecyclerView, mProgressbar);
+        FetchServices task = new FetchServices(getActivity(), mRecyclerView, mProgressbar, viewModel, false, 0);
         task.execute();
 
         mFab.setOnClickListener(v -> {
@@ -80,16 +80,22 @@ public class ServiceFragment extends Fragment {
         return view;
     }
 
-    class FetchServices extends AsyncTask<String, String, List<ServiceModel>> {
+    public static class FetchServices extends AsyncTask<String, String, List<ServiceModel>> {
 
         private Activity activity;
         private RecyclerView recyclerView;
         private ProgressBar progressBar;
+        private ServiceViewModel viewModel;
+        private boolean others;
+        private int memberId;
 
-        public FetchServices(Activity activity, RecyclerView recyclerView, ProgressBar progressBar) {
+        public FetchServices(Activity activity, RecyclerView recyclerView, ProgressBar progressBar, ServiceViewModel viewModel, boolean others, int memberId) {
             this.activity = activity;
             this.recyclerView = recyclerView;
             this.progressBar = progressBar;
+            this.viewModel = viewModel;
+            this.others = others;
+            this.memberId = memberId;
         }
 
         @Override
@@ -100,10 +106,12 @@ public class ServiceFragment extends Fragment {
         @Override
         protected List<ServiceModel> doInBackground(String... strings) {
 
+            List<ServiceModel> services = null;
+
             if(viewModel.getServices() == null){
                 try {
-                    viewModel.setServices(getContext());
-                    mServices = viewModel.getServices();
+                    viewModel.setServices(activity, others, memberId);
+                    services = viewModel.getServices();
                 }
                 catch (Exception e){
                     Log.e("Error", e.toString());
@@ -113,13 +121,13 @@ public class ServiceFragment extends Fragment {
 
             }
 
-            return mServices;
+            return services;
         }
 
         @Override
         protected void onProgressUpdate(String... values) {
             if(values[0].equals("Exception")){
-                showCustomToast(getContext(), "Some error occurred.",1);
+                showCustomToast(activity, "Some error occurred.",1);
                 progressBar.setVisibility(View.INVISIBLE);
             }
         }

@@ -48,8 +48,6 @@ public class HomeActivity extends AppCompatActivity
         mManager = getSupportFragmentManager();
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
-        mManager.beginTransaction().replace(R.id.content_main, new SearchFragment()).commit();
-
         mToggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(mToggle);
@@ -57,6 +55,18 @@ public class HomeActivity extends AppCompatActivity
 
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
+
+        Bundle extras = getIntent().getExtras();
+
+        if (extras.getBoolean("fromProfile")){
+            if (extras.getBoolean("products"))
+                mManager.beginTransaction().replace(R.id.content_main, new ProductFragment()).commit();
+            if (extras.getBoolean("services"))
+                mManager.beginTransaction().replace(R.id.content_main, new ServiceFragment()).commit();
+        }
+        else {
+            mManager.beginTransaction().replace(R.id.content_main, new SearchFragment()).commit();
+        }
     }
 
     @Override

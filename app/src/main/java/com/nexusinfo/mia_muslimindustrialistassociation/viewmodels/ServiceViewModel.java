@@ -22,19 +22,27 @@ import java.util.List;
 public class ServiceViewModel extends ViewModel {
 
     private List<ServiceModel> services;
+    private int memberId;
 
-    public void setServices(Context context) throws Exception{
+    public void setServices(Context context, boolean others, int memberId) throws Exception{
         services = new ArrayList<>();
 
         UserModel user = LocalDatabaseHelper.getInstance(context).getUser();
-        int memberID = user.getMemberId();
+
+        if (others){
+            this.memberId = memberId;
+        }
+        else {
+            this.memberId = user.getMemberId();
+        }
+
 
         DatabaseConnection connection = new DatabaseConnection(DatabaseConnection.MIA_DB_NAME);
         Connection conn = connection.getConnection();
 
         Statement stmt = conn.createStatement();
 
-        String query = "SELECT ServiceId, Service, CompanyName, Designation, ServiceDescription, isActive, cmpid, brcode FROM View_MemberService WHERE MemberId = " + memberID;
+        String query = "SELECT ServiceId, Service, CompanyName, Name, Designation, ServiceDescription, isActive, cmpid, brcode FROM View_MemberService WHERE MemberId = " + this.memberId;
         Log.e("ServicesQuery", query);
 
         ResultSet rs = stmt.executeQuery(query);
@@ -45,8 +53,8 @@ public class ServiceViewModel extends ViewModel {
             serviceModel.setServiceId(rs.getInt("ServiceId"));
             serviceModel.setServiceName(rs.getString("Service"));
 
-            serviceModel.setMemberId(memberID);
-            serviceModel.setMemberName(user.getMemberName());
+            serviceModel.setMemberId(this.memberId);
+            serviceModel.setMemberName(rs.getString("Name"));
             serviceModel.setMemberDesignation(rs.getString("Designation"));
             serviceModel.setCompanyName(rs.getString("CompanyName"));
 

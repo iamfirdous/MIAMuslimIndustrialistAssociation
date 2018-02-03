@@ -3,6 +3,7 @@ package com.nexusinfo.mia_muslimindustrialistassociation.ui.activities;
 import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -50,6 +51,38 @@ public class MemberProfileActivity extends AppCompatActivity {
 
         FetchProfile task = new FetchProfile(this, holder, viewModel);
         task.execute(of, "" + memberId);
+
+        UserModel user = LocalDatabaseHelper.getInstance(this).getUser();
+
+        Log.e("memberId", of + " : " + memberId + " : " + user.getMemberId());
+
+        holder.linearLayoutProductCount.setOnClickListener(view -> {
+            if (of.equals("ThisMember") || memberId == user.getMemberId()){
+                Intent productsIntent = new Intent(this, HomeActivity.class);
+                productsIntent.putExtra("fromProfile", true);
+                productsIntent.putExtra("products", true);
+                startActivity(productsIntent);
+            }
+            else if (of.equals("OtherMember")){
+                Intent productsIntent = new Intent(this, ProductActivity.class);
+                productsIntent.putExtra("memberId", memberId);
+                startActivity(productsIntent);
+            }
+        });
+
+        holder.linearLayoutServiceCount.setOnClickListener(view -> {
+            if (of.equals("ThisMember") || memberId == user.getMemberId()){
+                Intent servicesIntent = new Intent(this, HomeActivity.class);
+                servicesIntent.putExtra("fromProfile", true);
+                servicesIntent.putExtra("services", true);
+                startActivity(servicesIntent);
+            }
+            else if (of.equals("OtherMember")){
+                Intent servicesIntent = new Intent(this, ServiceActivity.class);
+                servicesIntent.putExtra("memberId", memberId);
+                startActivity(servicesIntent);
+            }
+        });
     }
 
     public static class FetchProfile extends AsyncTask<String, String, MemberModel> {
@@ -189,18 +222,19 @@ public class MemberProfileActivity extends AppCompatActivity {
                     });
                 }
                 else {
-                    holder.linearLayoutAllDetails.setVisibility(View.INVISIBLE);
-                    holder.linearLayoutProfileEdit.setVisibility(View.INVISIBLE);
+                    holder.linearLayoutAllDetails.setVisibility(View.GONE);
+                    holder.linearLayoutProfileEdit.setVisibility(View.GONE);
                 }
             }
         }
     }
 
     public class ProfileViewHolder {
-        public LinearLayout linearLayout, linearLayoutAllDetails, linearLayoutProfileEdit;
+        public LinearLayout linearLayout, linearLayoutAllDetails, linearLayoutProfileEdit,
+                            linearLayoutProductCount, linearLayoutServiceCount;
         public TextView tvCompanyName, tvMemberName, tvMemberDesignation,
-                tvProductCount, tvServiceCount, tvRatings,
-                tvEmail, tvMobile, tvAddress;
+                        tvProductCount, tvServiceCount, tvRatings,
+                        tvEmail, tvMobile, tvAddress;
         public ImageView ivMemberPhoto;
         public ProgressBar progressBar;
 
@@ -209,8 +243,13 @@ public class MemberProfileActivity extends AppCompatActivity {
             tvCompanyName = activity.findViewById(R.id.textView_companyName_profile);
             tvMemberName = activity.findViewById(R.id.textView_memberNameProfile);
             tvMemberDesignation = activity.findViewById(R.id.textView_memberDesignationProfile);
+
             tvProductCount = activity.findViewById(R.id.textView_productCountProfile);
+            linearLayoutProductCount = activity.findViewById(R.id.linearLayout_productCountProfile);
+
             tvServiceCount = activity.findViewById(R.id.textView_serviceCountProfile);
+            linearLayoutServiceCount = activity.findViewById(R.id.linearLayout_serviceCountProfile);
+
             tvRatings = activity.findViewById(R.id.textView_ratingsProfile);
             tvEmail = activity.findViewById(R.id.textView_memberEmailProfile);
             tvMobile = activity.findViewById(R.id.textView_memberMobileProfile);

@@ -42,8 +42,6 @@ public class ProductFragment extends Fragment {
     private FloatingActionButton mFab;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressbar;
-    private List<ProductModel> mProducts;
-    private ProductAdapter mAdapter;
 
     private ProductViewModel viewModel;
 
@@ -70,7 +68,7 @@ public class ProductFragment extends Fragment {
 
         viewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
 
-        FetchProducts task = new FetchProducts(getActivity(), mRecyclerView, mProgressbar);
+        FetchProducts task = new FetchProducts(getActivity(), mRecyclerView, mProgressbar, viewModel, false, 0);
         task.execute();
 
         mFab.setOnClickListener(v -> {
@@ -81,16 +79,22 @@ public class ProductFragment extends Fragment {
         return view;
     }
 
-    class FetchProducts extends AsyncTask<String, String, List<ProductModel>> {
+    public static class FetchProducts extends AsyncTask<String, String, List<ProductModel>> {
 
         private Activity activity;
         private RecyclerView recyclerView;
         private ProgressBar progressBar;
+        private ProductViewModel viewModel;
+        private boolean others;
+        private int memberId;
 
-        public FetchProducts(Activity activity, RecyclerView recyclerView, ProgressBar progressBar) {
+        public FetchProducts(Activity activity, RecyclerView recyclerView, ProgressBar progressBar, ProductViewModel viewModel, boolean others, int memberId) {
             this.activity = activity;
             this.recyclerView = recyclerView;
             this.progressBar = progressBar;
+            this.viewModel = viewModel;
+            this.others = others;
+            this.memberId = memberId;
         }
 
         @Override
@@ -101,10 +105,12 @@ public class ProductFragment extends Fragment {
         @Override
         protected List<ProductModel> doInBackground(String... strings) {
 
+            List<ProductModel> products = null;
+
             if(viewModel.getProducts() == null){
                 try {
-                    viewModel.setProducts(getContext());
-                    mProducts = viewModel.getProducts();
+                    viewModel.setProducts(activity, others, memberId);
+                    products = viewModel.getProducts();
                 }
                 catch (Exception e){
                     Log.e("Error", e.toString());
@@ -114,13 +120,13 @@ public class ProductFragment extends Fragment {
 
             }
 
-            return mProducts;
+            return products;
         }
 
         @Override
         protected void onProgressUpdate(String... values) {
             if(values[0].equals("Exception")){
-                showCustomToast(getContext(), "Some error occurred.",1);
+                showCustomToast(activity, "Some error occurred.",1);
                 progressBar.setVisibility(View.INVISIBLE);
             }
         }
@@ -129,8 +135,8 @@ public class ProductFragment extends Fragment {
         protected void onPostExecute(List<ProductModel> products) {
             progressBar.setVisibility(View.INVISIBLE);
 
-            mAdapter = new ProductAdapter(activity, products);
-            recyclerView.setAdapter(mAdapter);
+            ProductAdapter adapter = new ProductAdapter(activity, products);
+            recyclerView.setAdapter(adapter);
         }
     }
 

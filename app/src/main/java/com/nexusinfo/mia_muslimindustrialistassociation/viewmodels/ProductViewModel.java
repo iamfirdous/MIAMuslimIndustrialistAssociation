@@ -24,19 +24,26 @@ import static java.lang.Thread.sleep;
 public class ProductViewModel extends ViewModel {
 
     private List<ProductModel> products;
+    private int memberId;
 
-    public void setProducts(Context context) throws Exception{
+    public void setProducts(Context context, boolean others, int memberId) throws Exception{
         products = new ArrayList<>();
 
         UserModel user = LocalDatabaseHelper.getInstance(context).getUser();
-        int memberID = user.getMemberId();
+
+        if (others){
+            this.memberId = memberId;
+        }
+        else {
+            this.memberId = user.getMemberId();
+        }
 
         DatabaseConnection connection = new DatabaseConnection(DatabaseConnection.MIA_DB_NAME);
         Connection conn = connection.getConnection();
 
         Statement stmt = conn.createStatement();
 
-        String query = "SELECT ProductId, PorductName, CompanyName, Designation, CategoryId, CategoryName, SubCategoryId, SubCategoryName, Specification, Photo, isActive, cmpid, brcode FROM View_MemberProduct WHERE MemberId = " + memberID;
+        String query = "SELECT ProductId, PorductName, CompanyName, Name, Designation, CategoryId, CategoryName, SubCategoryId, SubCategoryName, Specification, Photo, isActive, cmpid, brcode FROM View_MemberProduct WHERE MemberId = " + this.memberId;
         Log.e("ProductsQuery", query);
 
         ResultSet rs = stmt.executeQuery(query);
@@ -47,8 +54,8 @@ public class ProductViewModel extends ViewModel {
             productModel.setProductId(rs.getInt("ProductId"));
             productModel.setProductName(rs.getString("PorductName"));
 
-            productModel.setMemberId(memberID);
-            productModel.setMemberName(user.getMemberName());
+            productModel.setMemberId(this.memberId);
+            productModel.setMemberName(rs.getString("Name"));
             productModel.setMemberDesignation(rs.getString("Designation"));
             productModel.setCompanyName(rs.getString("CompanyName"));
 

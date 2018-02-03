@@ -69,6 +69,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
 
+        <activity
+            android:name=".ui.activities.ProductActivity"
+            android:label="Products"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".ui.activities.ServiceActivity"
+            android:label="Services"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

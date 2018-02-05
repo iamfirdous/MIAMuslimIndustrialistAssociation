@@ -1,11 +1,12 @@
 package com.nexusinfo.mia_muslimindustrialistassociation.model
 
+import java.io.Serializable
 import java.util.*
 
 /**
  * Created by firdous on 1/13/2018.
  */
-class MemberModel {
+class MemberModel : Serializable {
     var memberId: Int? = 0
     var name: String? = null
     var mobile: String? = null

@@ -12,6 +12,17 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"/>
 
+    <TextView
+        android:id="@+id/textView_emptyProducts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="visible"
+        android:textColor="@color/colorTextBlack"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="You don't have any products yet. \n Click the below 'Add button(+)' \nto add products." />
+
     <ProgressBar
         android:id="@+id/progressBar_product"
         android:layout_width="wrap_content"

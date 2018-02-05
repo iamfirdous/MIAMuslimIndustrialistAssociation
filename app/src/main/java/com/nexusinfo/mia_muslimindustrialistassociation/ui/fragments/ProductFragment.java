@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
 import com.nexusinfo.mia_muslimindustrialistassociation.model.ProductModel;
@@ -39,9 +40,7 @@ public class ProductFragment extends Fragment {
     }
 
     private View view;
-    private FloatingActionButton mFab;
-    private RecyclerView mRecyclerView;
-    private ProgressBar mProgressbar;
+    private ProductFragmentViewHolder holder;
 
     private ProductViewModel viewModel;
 
@@ -54,24 +53,23 @@ public class ProductFragment extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
         view = inflater.inflate(R.layout.fragment_product, container, false);
 
-        mFab = view.findViewById(R.id.fab_add_product);
-        mRecyclerView = view.findViewById(R.id.recyclerView_product);
-        mProgressbar = view.findViewById(R.id.progressBar_product);
+        holder = new ProductFragmentViewHolder(view);
 
-        mProgressbar.setVisibility(View.INVISIBLE);
+        holder.progressBar.setVisibility(View.INVISIBLE);
+        holder.tvEmpty.setVisibility(View.GONE);
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(manager);
+        holder.recyclerView.setHasFixedSize(true);
+        holder.recyclerView.setLayoutManager(manager);
 
         viewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
 
-        FetchProducts task = new FetchProducts(getActivity(), mRecyclerView, mProgressbar, viewModel, false, 0);
+        FetchProducts task = new FetchProducts(getActivity(), holder, viewModel, false, 0);
         task.execute();
 
-        mFab.setOnClickListener(v -> {
+        holder.fab.setOnClickListener(v -> {
             Intent addProductIntent = new Intent(getContext(), AddProductActivity.class);
             startActivity(addProductIntent);
         });
@@ -82,16 +80,14 @@ public class ProductFragment extends Fragment {
     public static class FetchProducts extends AsyncTask<String, String, List<ProductModel>> {
 
         private Activity activity;
-        private RecyclerView recyclerView;
-        private ProgressBar progressBar;
+        private ProductFragmentViewHolder holder;
         private ProductViewModel viewModel;
         private boolean others;
         private int memberId;
 
-        public FetchProducts(Activity activity, RecyclerView recyclerView, ProgressBar progressBar, ProductViewModel viewModel, boolean others, int memberId) {
+        public FetchProducts(Activity activity, ProductFragmentViewHolder holder, ProductViewModel viewModel, boolean others, int memberId) {
             this.activity = activity;
-            this.recyclerView = recyclerView;
-            this.progressBar = progressBar;
+            this.holder = holder;
             this.viewModel = viewModel;
             this.others = others;
             this.memberId = memberId;
@@ -99,7 +95,7 @@ public class ProductFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            progressBar.setVisibility(View.VISIBLE);
+            holder.progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -111,6 +107,15 @@ public class ProductFragment extends Fragment {
                 try {
                     viewModel.setProducts(activity, others, memberId);
                     products = viewModel.getProducts();
+
+                    if (products.size() == 0){
+                        Log.e("NoProducts", "Zero products found");
+                        publishProgress("NoProducts");
+                    }
+                    else {
+                        Log.e("ProductsFound", products.size() + " products found");
+                        publishProgress("ProductsFound");
+                    }
                 }
                 catch (Exception e){
                     Log.e("Error", e.toString());
@@ -127,16 +132,45 @@ public class ProductFragment extends Fragment {
         protected void onProgressUpdate(String... values) {
             if(values[0].equals("Exception")){
                 showCustomToast(activity, "Some error occurred.",1);
-                progressBar.setVisibility(View.INVISIBLE);
+                holder.progressBar.setVisibility(View.INVISIBLE);
+            }
+            if (values[0].equals("NoProducts")){
+                holder.recyclerView.setVisibility(View.INVISIBLE);
+                holder.tvEmpty.setVisibility(View.VISIBLE);
+            }
+            else if (values[0].equals("ProductsFound")){
+                holder.recyclerView.setVisibility(View.VISIBLE);
+                holder.tvEmpty.setVisibility(View.GONE);
             }
         }
 
         @Override
         protected void onPostExecute(List<ProductModel> products) {
-            progressBar.setVisibility(View.INVISIBLE);
+            holder.progressBar.setVisibility(View.INVISIBLE);
 
             ProductAdapter adapter = new ProductAdapter(activity, products);
-            recyclerView.setAdapter(adapter);
+            holder.recyclerView.setAdapter(adapter);
+        }
+    }
+
+    public static class ProductFragmentViewHolder {
+        public FloatingActionButton fab;
+        public RecyclerView recyclerView;
+        public ProgressBar progressBar;
+        public TextView tvEmpty;
+
+        public ProductFragmentViewHolder(View view) {
+            fab = view.findViewById(R.id.fab_add_product);
+            recyclerView = view.findViewById(R.id.recyclerView_product);
+            progressBar = view.findViewById(R.id.progressBar_product);
+            tvEmpty = view.findViewById(R.id.textView_emptyProducts);
+        }
+
+        public ProductFragmentViewHolder(Activity activity) {
+            fab = activity.findViewById(R.id.fab_add_product);
+            recyclerView = activity.findViewById(R.id.recyclerView_product);
+            progressBar = activity.findViewById(R.id.progressBar_product);
+            tvEmpty = activity.findViewById(R.id.textView_emptyProducts);
         }
     }
 

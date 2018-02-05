@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
 import com.nexusinfo.mia_muslimindustrialistassociation.model.ServiceModel;
@@ -38,11 +39,7 @@ public class ServiceFragment extends Fragment {
     }
 
     private View view;
-    private FloatingActionButton mFab;
-    private RecyclerView mRecyclerView;
-    private ProgressBar mProgressbar;
-    private List<ServiceModel> mServices;
-    private ServiceAdapter mAdapter;
+    private ServiceFragmentViewHolder holder;
 
     private ServiceViewModel viewModel;
 
@@ -55,24 +52,23 @@ public class ServiceFragment extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
         view = inflater.inflate(R.layout.fragment_service, container, false);
 
-        mFab = view.findViewById(R.id.fab_add_service);
-        mRecyclerView = view.findViewById(R.id.recyclerView_service);
-        mProgressbar = view.findViewById(R.id.progressBar_service);
+        holder = new ServiceFragmentViewHolder(view);
 
-        mProgressbar.setVisibility(View.INVISIBLE);
+        holder.progressBar.setVisibility(View.INVISIBLE);
+        holder.tvEmpty.setVisibility(View.GONE);
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(manager);
+        holder.recyclerView.setHasFixedSize(true);
+        holder.recyclerView.setLayoutManager(manager);
 
         viewModel = ViewModelProviders.of(this).get(ServiceViewModel.class);
 
-        FetchServices task = new FetchServices(getActivity(), mRecyclerView, mProgressbar, viewModel, false, 0);
+        FetchServices task = new FetchServices(getActivity(), holder, viewModel, false, 0);
         task.execute();
 
-        mFab.setOnClickListener(v -> {
+        holder.fab.setOnClickListener(v -> {
             Intent addServiceIntent = new Intent(getContext(), AddServiceActivity.class);
             startActivity(addServiceIntent);
         });
@@ -83,16 +79,14 @@ public class ServiceFragment extends Fragment {
     public static class FetchServices extends AsyncTask<String, String, List<ServiceModel>> {
 
         private Activity activity;
-        private RecyclerView recyclerView;
-        private ProgressBar progressBar;
+        private ServiceFragmentViewHolder holder;
         private ServiceViewModel viewModel;
         private boolean others;
         private int memberId;
 
-        public FetchServices(Activity activity, RecyclerView recyclerView, ProgressBar progressBar, ServiceViewModel viewModel, boolean others, int memberId) {
+        public FetchServices(Activity activity, ServiceFragmentViewHolder holder, ServiceViewModel viewModel, boolean others, int memberId) {
             this.activity = activity;
-            this.recyclerView = recyclerView;
-            this.progressBar = progressBar;
+            this.holder = holder;
             this.viewModel = viewModel;
             this.others = others;
             this.memberId = memberId;
@@ -100,7 +94,7 @@ public class ServiceFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            progressBar.setVisibility(View.VISIBLE);
+            holder.progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -112,6 +106,15 @@ public class ServiceFragment extends Fragment {
                 try {
                     viewModel.setServices(activity, others, memberId);
                     services = viewModel.getServices();
+
+                    if (services.size() == 0){
+                        Log.e("NoServices", "Zero services found");
+                        publishProgress("NoServices");
+                    }
+                    else {
+                        Log.e("ServicesFound", services.size() + " services found");
+                        publishProgress("ServicesFound");
+                    }
                 }
                 catch (Exception e){
                     Log.e("Error", e.toString());
@@ -128,16 +131,45 @@ public class ServiceFragment extends Fragment {
         protected void onProgressUpdate(String... values) {
             if(values[0].equals("Exception")){
                 showCustomToast(activity, "Some error occurred.",1);
-                progressBar.setVisibility(View.INVISIBLE);
+                holder.progressBar.setVisibility(View.INVISIBLE);
+            }
+            if (values[0].equals("NoServices")){
+                holder.recyclerView.setVisibility(View.INVISIBLE);
+                holder.tvEmpty.setVisibility(View.VISIBLE);
+            }
+            else if (values[0].equals("ServicesFound")){
+                holder.recyclerView.setVisibility(View.VISIBLE);
+                holder.tvEmpty.setVisibility(View.GONE);
             }
         }
 
         @Override
         protected void onPostExecute(List<ServiceModel> services) {
-            progressBar.setVisibility(View.INVISIBLE);
+            holder.progressBar.setVisibility(View.INVISIBLE);
 
             ServiceAdapter adapter = new ServiceAdapter(activity, services);
-            recyclerView.setAdapter(adapter);
+            holder.recyclerView.setAdapter(adapter);
+        }
+    }
+
+    public static class ServiceFragmentViewHolder {
+        public FloatingActionButton fab;
+        public RecyclerView recyclerView;
+        public ProgressBar progressBar;
+        public TextView tvEmpty;
+
+        public ServiceFragmentViewHolder(View view) {
+            fab = view.findViewById(R.id.fab_add_service);
+            recyclerView = view.findViewById(R.id.recyclerView_service);
+            progressBar = view.findViewById(R.id.progressBar_service);
+            tvEmpty = view.findViewById(R.id.textView_emptyServices);
+        }
+
+        public ServiceFragmentViewHolder(Activity activity) {
+            fab = activity.findViewById(R.id.fab_add_service);
+            recyclerView = activity.findViewById(R.id.recyclerView_service);
+            progressBar = activity.findViewById(R.id.progressBar_service);
+            tvEmpty = activity.findViewById(R.id.textView_emptyServices);
         }
     }
 }

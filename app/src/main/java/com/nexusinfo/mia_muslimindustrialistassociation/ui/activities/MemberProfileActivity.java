@@ -2,7 +2,6 @@ package com.nexusinfo.mia_muslimindustrialistassociation.ui.activities;
 
 import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -87,12 +86,12 @@ public class MemberProfileActivity extends AppCompatActivity {
 
     public static class FetchProfile extends AsyncTask<String, String, MemberModel> {
 
-        private Context context;
+        private MemberProfileActivity activity;
         private ProfileViewHolder holder;
         private MemberViewModel viewModel;
 
-        public FetchProfile(Context context, ProfileViewHolder holder, MemberViewModel viewModel){
-            this.context = context;
+        public FetchProfile(MemberProfileActivity activity, ProfileViewHolder holder, MemberViewModel viewModel){
+            this.activity = activity;
             this.holder = holder;
             this.viewModel = viewModel;
         }
@@ -106,16 +105,17 @@ public class MemberProfileActivity extends AppCompatActivity {
         @Override
         protected MemberModel doInBackground(String... strings) {
 
-            MemberModel member = null;
+            MemberModel member = (MemberModel) activity.getIntent().getSerializableExtra("MemberModel");
+            viewModel.setMember(member);
 
             if(viewModel.getMember() == null){
                 try {
                     if(strings[0].equals("OtherMember")){
-                        viewModel.setMember(context, true, Integer.parseInt(strings[1]));
+                        viewModel.setMember(activity, true, Integer.parseInt(strings[1]));
                         member = viewModel.getMember();
                     }
                     else {
-                        viewModel.setMember(context, false, 0);
+                        viewModel.setMember(activity, false, 0);
                         member = viewModel.getMember();
                     }
                 }
@@ -134,7 +134,7 @@ public class MemberProfileActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(String... values) {
             if(values[0].equals("Exception")){
-                showCustomToast(context, "Some error occurred.",1);
+                showCustomToast(activity, "Some error occurred.",1);
                 holder.progressBar.setVisibility(View.INVISIBLE);
             }
         }
@@ -165,7 +165,7 @@ public class MemberProfileActivity extends AppCompatActivity {
                 if(photoData != null)
                     bmp = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
                 else
-                    bmp = ((BitmapDrawable)context.getResources().getDrawable(R.drawable.ic_profile_white)).getBitmap();
+                    bmp = ((BitmapDrawable) activity.getResources().getDrawable(R.drawable.ic_profile_white)).getBitmap();
 
                 holder.ivMemberPhoto.setImageBitmap(bmp);
 
@@ -207,18 +207,18 @@ public class MemberProfileActivity extends AppCompatActivity {
                 holder.tvProductCount.setText("" + productCount);
                 holder.tvServiceCount.setText("" + serviceCount);
 
-                UserModel user = LocalDatabaseHelper.getInstance(context).getUser();
+                UserModel user = LocalDatabaseHelper.getInstance(activity).getUser();
 
                 if (member.getMemberId() == user.getMemberId()){
                     holder.linearLayoutAllDetails.setVisibility(View.VISIBLE);
                     holder.linearLayoutProfileEdit.setVisibility(View.VISIBLE);
 
                     holder.linearLayoutAllDetails.setOnClickListener(view -> {
-                        showCustomToast(context, "View all details",1);
+                        showCustomToast(activity, "View all details",1);
                     });
 
                     holder.linearLayoutProfileEdit.setOnClickListener(view -> {
-                        showCustomToast(context, "Edit profile",1);
+                        showCustomToast(activity, "Edit profile",1);
                     });
                 }
                 else {

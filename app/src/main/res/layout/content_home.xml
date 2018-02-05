@@ -8,9 +8,74 @@
     tools:context="com.nexusinfo.mia_muslimindustrialistassociation.ui.activities.HomeActivity"
     tools:showIn="@layout/app_bar_home">
 
+    <RelativeLayout
+        android:id="@+id/relativeLayout_load"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imageView_mia_logo"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_above="@+id/progressBarHeaderProgress"
+            android:src="@mipmap/ic_mia_logo" />
+
+        <ProgressBar
+            android:id="@+id/progressBarHeaderProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+        </ProgressBar>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/progressBarHeaderProgress"
+            android:textColor="@color/colorAccent"
+            android:text="Loading.. Please wait."/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_someError"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imageView_mia_logo1"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_above="@+id/textView_someError"
+            android:src="@mipmap/ic_mia_logo" />
+
+        <TextView
+            android:id="@+id/textView_someError"
+            style="@style/MIATheme.TextViewLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/imageView_refresh_stu"
+            android:text="Some error occurred. Try again"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/ic_refresh_blue_24dp"
+            android:layout_centerInParent="true"
+            android:id="@+id/imageView_refresh_stu"/>
+
+    </RelativeLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorActivityBackground"
         android:id="@+id/content_main">
 
     </FrameLayout>

@@ -25,9 +25,7 @@ import java.util.List;
 
 public class ProductActivity extends AppCompatActivity {
 
-    private FloatingActionButton mFab;
-    private RecyclerView mRecyclerView;
-    private ProgressBar mProgressbar;
+    private ProductFragment.ProductFragmentViewHolder holder;
 
     private ProductViewModel viewModel;
 
@@ -39,25 +37,24 @@ public class ProductActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        mFab = findViewById(R.id.fab_add_product);
-        mFab.setVisibility(View.INVISIBLE);
+        holder = new ProductFragment.ProductFragmentViewHolder(this);
 
-        mRecyclerView = findViewById(R.id.recyclerView_product);
-        mProgressbar = findViewById(R.id.progressBar_product);
+        holder.fab.setVisibility(View.INVISIBLE);
 
-        mProgressbar.setVisibility(View.INVISIBLE);
+        holder.progressBar.setVisibility(View.INVISIBLE);
+        holder.tvEmpty.setVisibility(View.GONE);
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(manager);
+        holder.recyclerView.setHasFixedSize(true);
+        holder.recyclerView.setLayoutManager(manager);
 
         viewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
 
         int memberId = getIntent().getExtras().getInt("memberId");
 
-        ProductFragment.FetchProducts task = new ProductFragment.FetchProducts(this, mRecyclerView, mProgressbar, viewModel, true, memberId);
+        ProductFragment.FetchProducts task = new ProductFragment.FetchProducts(this, holder, viewModel, true, memberId);
         task.execute();
 
     }

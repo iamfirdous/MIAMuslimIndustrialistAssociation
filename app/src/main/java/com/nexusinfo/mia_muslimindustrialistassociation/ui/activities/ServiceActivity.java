@@ -23,9 +23,7 @@ import com.nexusinfo.mia_muslimindustrialistassociation.viewmodels.ServiceViewMo
 
 public class ServiceActivity extends AppCompatActivity {
 
-    private FloatingActionButton mFab;
-    private RecyclerView mRecyclerView;
-    private ProgressBar mProgressbar;
+    private ServiceFragment.ServiceFragmentViewHolder holder;
 
     private ServiceViewModel viewModel;
 
@@ -37,25 +35,24 @@ public class ServiceActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        mFab = findViewById(R.id.fab_add_service);
-        mFab.setVisibility(View.INVISIBLE);
+        holder = new ServiceFragment.ServiceFragmentViewHolder(this);
 
-        mRecyclerView = findViewById(R.id.recyclerView_service);
-        mProgressbar = findViewById(R.id.progressBar_service);
+        holder.fab.setVisibility(View.INVISIBLE);
 
-        mProgressbar.setVisibility(View.INVISIBLE);
+        holder.progressBar.setVisibility(View.INVISIBLE);
+        holder.tvEmpty.setVisibility(View.GONE);
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(manager);
+        holder.recyclerView.setHasFixedSize(true);
+        holder.recyclerView.setLayoutManager(manager);
 
         viewModel = ViewModelProviders.of(this).get(ServiceViewModel.class);
 
         int memberId = getIntent().getExtras().getInt("memberId");
 
-        ServiceFragment.FetchServices task = new ServiceFragment.FetchServices(this, mRecyclerView, mProgressbar, viewModel, true, memberId);
+        ServiceFragment.FetchServices task = new ServiceFragment.FetchServices(this, holder, viewModel, true, memberId);
         task.execute();
     }
 }

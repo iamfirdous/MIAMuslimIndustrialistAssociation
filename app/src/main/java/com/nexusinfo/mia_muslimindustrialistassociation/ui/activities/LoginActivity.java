@@ -17,7 +17,7 @@ import com.nexusinfo.mia_muslimindustrialistassociation.LocalDatabaseHelper;
 import com.nexusinfo.mia_muslimindustrialistassociation.MyApplication;
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
 import com.nexusinfo.mia_muslimindustrialistassociation.connection.DatabaseConnection;
-import com.nexusinfo.mia_muslimindustrialistassociation.model.UserModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.models.UserModel;
 import com.nexusinfo.mia_muslimindustrialistassociation.receivers.InternetConnectivityReceiver;
 
 import java.sql.Connection;

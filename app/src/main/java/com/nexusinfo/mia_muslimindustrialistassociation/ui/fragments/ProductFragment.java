@@ -19,7 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
-import com.nexusinfo.mia_muslimindustrialistassociation.model.ProductModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.models.ProductModel;
 import com.nexusinfo.mia_muslimindustrialistassociation.ui.activities.AddProductActivity;
 import com.nexusinfo.mia_muslimindustrialistassociation.ui.adapters.ProductAdapter;
 import com.nexusinfo.mia_muslimindustrialistassociation.viewmodels.ProductViewModel;

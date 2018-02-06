@@ -71,18 +71,18 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/editText_productCategory"
+            <Spinner
+                android:id="@+id/spinner_productCategory"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
                 android:layout_margin="@dimen/fab_margin"
                 android:layout_below="@id/textInputLayout_productDescription"
                 android:hint="Select category*"/>
 
-            <EditText
-                android:id="@+id/editText_productSubCategory"
+            <Spinner
+                android:id="@+id/spinner_productSubCategory"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
                 android:layout_margin="@dimen/fab_margin"
                 android:layout_below="@id/editText_productCategory"
                 android:hint="Select sub-category*"/>

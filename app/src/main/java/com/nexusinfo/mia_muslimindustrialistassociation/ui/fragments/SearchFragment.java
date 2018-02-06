@@ -22,7 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
-import com.nexusinfo.mia_muslimindustrialistassociation.model.ItemModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.models.ItemModel;
 import com.nexusinfo.mia_muslimindustrialistassociation.ui.adapters.ItemAdapter;
 import com.nexusinfo.mia_muslimindustrialistassociation.ui.adapters.SlidesAdapter;
 import com.nexusinfo.mia_muslimindustrialistassociation.viewmodels.ItemViewModel;

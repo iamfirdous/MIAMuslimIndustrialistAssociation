@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
-import com.nexusinfo.mia_muslimindustrialistassociation.model.ProductModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.models.ProductModel;
 import com.nexusinfo.mia_muslimindustrialistassociation.ui.activities.ViewProductActivity;
 
 import java.util.List;

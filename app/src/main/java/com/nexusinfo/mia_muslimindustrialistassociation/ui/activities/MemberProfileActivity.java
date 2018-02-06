@@ -22,8 +22,8 @@ import android.widget.TextView;
 
 import com.nexusinfo.mia_muslimindustrialistassociation.LocalDatabaseHelper;
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
-import com.nexusinfo.mia_muslimindustrialistassociation.model.MemberModel;
-import com.nexusinfo.mia_muslimindustrialistassociation.model.UserModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.models.MemberModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.models.UserModel;
 import com.nexusinfo.mia_muslimindustrialistassociation.viewmodels.MemberViewModel;
 
 import static com.nexusinfo.mia_muslimindustrialistassociation.utils.Util.showCustomToast;

@@ -6,8 +6,8 @@ import android.util.Log;
 
 import com.nexusinfo.mia_muslimindustrialistassociation.LocalDatabaseHelper;
 import com.nexusinfo.mia_muslimindustrialistassociation.connection.DatabaseConnection;
-import com.nexusinfo.mia_muslimindustrialistassociation.model.ProductModel;
-import com.nexusinfo.mia_muslimindustrialistassociation.model.UserModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.models.ProductModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.models.UserModel;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

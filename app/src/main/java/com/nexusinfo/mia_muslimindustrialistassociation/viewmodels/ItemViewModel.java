@@ -2,20 +2,17 @@ package com.nexusinfo.mia_muslimindustrialistassociation.viewmodels;
 
 import android.arch.lifecycle.ViewModel;
 import android.content.Context;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import com.nexusinfo.mia_muslimindustrialistassociation.connection.DatabaseConnection;
-import com.nexusinfo.mia_muslimindustrialistassociation.model.ItemModel;
-import com.nexusinfo.mia_muslimindustrialistassociation.model.ProductModel;
-import com.nexusinfo.mia_muslimindustrialistassociation.model.ServiceModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.models.ItemModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.models.ProductModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.models.ServiceModel;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 /**

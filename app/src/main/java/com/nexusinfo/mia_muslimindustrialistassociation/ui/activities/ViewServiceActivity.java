@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.nexusinfo.mia_muslimindustrialistassociation.LocalDatabaseHelper;
 import com.nexusinfo.mia_muslimindustrialistassociation.R;
-import com.nexusinfo.mia_muslimindustrialistassociation.model.ServiceModel;
-import com.nexusinfo.mia_muslimindustrialistassociation.model.UserModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.models.ServiceModel;
+import com.nexusinfo.mia_muslimindustrialistassociation.models.UserModel;
 
 public class ViewServiceActivity extends AppCompatActivity {
 

@@ -84,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_margin="@dimen/fab_margin"
-                android:layout_below="@id/editText_productCategory"
+                android:layout_below="@id/spinner_productCategory"
                 android:hint="Select sub-category*"/>
 
             <android.support.design.widget.TextInputLayout
@@ -92,7 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
-                android:layout_below="@id/editText_productSubCategory">
+                android:layout_below="@id/spinner_productSubCategory">
 
                 <EditText
                     android:id="@+id/editText_productKeywords"
